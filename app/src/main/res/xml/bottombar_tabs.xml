@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<tabs>
+    <tab
+        id="@+id/tab_feed"
+        icon="@drawable/ic_bottombar_feed"
+        title="Feed" />
+    <tab
+        id="@+id/tab_nearby"
+        icon="@drawable/ic_bottombar_nearby"
+        title="Nearby" />
+    <tab
+        id="@+id/tab_user"
+        icon="@drawable/ic_bottombar_user"
+        title="Profile" />
+</tabs>
