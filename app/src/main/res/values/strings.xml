@@ -6,4 +6,9 @@
 
     <string name="action_settings">Settings</string>
     <string name="action_add">Add</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="nearby_page">Nearby Page</string>
+    <string name="feed_page">Feed Page</string>
+    <string name="user_page">User Page</string>
 </resources>
