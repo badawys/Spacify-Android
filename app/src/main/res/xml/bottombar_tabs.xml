@@ -4,13 +4,13 @@
     <tab
         id="@+id/tab_feed"
         icon="@drawable/ic_bottombar_feed"
-        title="Feed" />
+        title="@string/bottombar_feed" />
     <tab
         id="@+id/tab_nearby"
         icon="@drawable/ic_bottombar_nearby"
-        title="Nearby" />
+        title="@string/bottombar_nearby" />
     <tab
         id="@+id/tab_user"
         icon="@drawable/ic_bottombar_user"
-        title="Profile" />
+        title="@string/bottombar_user" />
 </tabs>

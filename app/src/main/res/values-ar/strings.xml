@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">بروكلي</string>
+
+    <string name="navigation_drawer_open">فتح قائمة التنبيهات</string>
+    <string name="navigation_drawer_close">غلق قائمة التنبيهات</string>
+
+    <string name="action_settings">الإعدادات</string>
+    <string name="action_add">أضف</string>
+
+    <string name="nearby_page">صفحة الجوار</string>
+    <string name="feed_page">صفحة الأخبار</string>
+    <string name="user_page">صفحة المستخدم</string>
+
+    <string name="bottombar_feed">الأخبار</string>
+    <string name="bottombar_nearby">الجوار</string>
+    <string name="bottombar_user">المستخدم</string>
+    <string name="can_not_load_nearby">Can not load Nearby spaces :(</string>
+    <string name="can_not_load_user_information">Can not load your information :(</string>
+    <string name="can_not_load_your_feed">Can not load your feed now :(</string>
+    <string name="notifications">Notifications</string>
+    <string name="oops">Oops</string>
+
+
+</resources>
