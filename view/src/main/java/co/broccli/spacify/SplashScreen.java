@@ -13,13 +13,13 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.splash_screen);
 
 
-        int SPLASH_DISPLAY_LENGTH = 1000;
+        int SPLASH_DISPLAY_LENGTH = 3000;
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 startActivity(new Intent(SplashScreen.this, LoginActivity.class));
-                SplashScreen.this.overridePendingTransition(0, 0);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 finish();
             }
         }, SPLASH_DISPLAY_LENGTH);

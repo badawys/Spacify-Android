@@ -20,11 +20,13 @@
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:contentDescription="@string/app_name"
-                android:layout_height="20dp"
+                android:layout_height="28dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_toolbar_logo"/>
+                android:src="@drawable/ic_toolbar_logo"
+                android:layout_marginEnd="19dp"
+                android:layout_marginTop="15dp"/>
 
         </android.support.v7.widget.Toolbar>
 
