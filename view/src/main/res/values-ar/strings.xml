@@ -14,11 +14,11 @@
     <string name="bottombar_feed">الأخبار</string>
     <string name="bottombar_nearby">الجوار</string>
     <string name="bottombar_user">المستخدم</string>
-    <string name="can_not_load_nearby">Can not load Nearby spaces :(</string>
-    <string name="can_not_load_user_information">Can not load your information :(</string>
-    <string name="can_not_load_your_feed">Can not load your feed now :(</string>
-    <string name="notifications">Notifications</string>
-    <string name="oops">Oops</string>
+    <string name="can_not_load_nearby">لايمكن عرض الجوار حاليا :(</string>
+    <string name="can_not_load_user_information">لا يمكن عرض بياناتك حاليا :(</string>
+    <string name="can_not_load_your_feed">لا يمكن عرض آخر الأخبار حاليا :(</string>
+    <string name="notifications">التنبيهات</string>
+    <string name="oops">سحقاً</string>
 
 
 </resources>
