@@ -1,4 +1,4 @@
-package co.broccli.sdk;
+package co.broccli.logic;
 
 import org.junit.Test;
 

@@ -5,24 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.ContentLoadingProgressBar;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
-
-import java.util.List;
-
-import co.broccli.broccli.adapter.JoindAdapter;
-import co.broccli.sdk.model.Joind;
-import co.broccli.sdk.model.JoindResponse;
-import co.broccli.sdk.rest.ApiClient;
-import co.broccli.sdk.rest.ApiInterface;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class UserFragment extends Fragment {
 

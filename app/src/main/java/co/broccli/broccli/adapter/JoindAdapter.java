@@ -8,13 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 
 import java.util.List;
 
 import co.broccli.broccli.R;
-import co.broccli.sdk.model.Joind;
+import co.broccli.logic.model.Joind;
 
 
 public class JoindAdapter extends UltimateViewAdapter<JoindAdapter.JoindViewHolder>{

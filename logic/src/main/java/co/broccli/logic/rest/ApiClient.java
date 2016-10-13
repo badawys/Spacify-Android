@@ -1,4 +1,4 @@
-package co.broccli.sdk.rest;
+package co.broccli.logic.rest;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

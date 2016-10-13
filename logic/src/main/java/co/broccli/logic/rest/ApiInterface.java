@@ -1,6 +1,6 @@
-package co.broccli.sdk.rest;
+package co.broccli.logic.rest;
 
-import co.broccli.sdk.model.JoindResponse;
+import co.broccli.logic.model.JoindResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 

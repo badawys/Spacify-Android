@@ -1,11 +1,6 @@
-package co.broccli.sdk.model;
-
-import android.widget.ImageView;
-import android.widget.TextView;
+package co.broccli.logic.model;
 
 import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
 
 public class Joind {
 

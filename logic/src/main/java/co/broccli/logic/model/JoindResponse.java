@@ -1,4 +1,4 @@
-package co.broccli.sdk.model;
+package co.broccli.logic.model;
 
 import com.google.gson.annotations.SerializedName;
 
