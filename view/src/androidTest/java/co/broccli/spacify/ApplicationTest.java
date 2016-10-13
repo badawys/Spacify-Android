@@ -1,4 +1,4 @@
-package co.broccli.broccli;
+package co.broccli.spacify;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

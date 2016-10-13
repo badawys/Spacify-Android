@@ -1,4 +1,4 @@
-package co.broccli.broccli.adapter;
+package co.broccli.spacify.adapter;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +12,7 @@ import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 
 import java.util.List;
 
-import co.broccli.broccli.R;
+import co.broccli.spacify.R;
 import co.broccli.logic.model.Joind;
 
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">بروكلي</string>
+    <string name="app_name">Spacify</string>
 
     <string name="navigation_drawer_open">فتح قائمة التنبيهات</string>
     <string name="navigation_drawer_close">غلق قائمة التنبيهات</string>

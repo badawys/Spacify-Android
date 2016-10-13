@@ -1,4 +1,4 @@
-package co.broccli.broccli;
+package co.broccli.spacify;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
