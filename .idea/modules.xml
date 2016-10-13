@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Broccli.iml" filepath="$PROJECT_DIR$/Broccli.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/logic/sdk.iml" filepath="$PROJECT_DIR$/logic/sdk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/view/app.iml" filepath="$PROJECT_DIR$/view/app.iml" />
     </modules>
   </component>
 </project>
