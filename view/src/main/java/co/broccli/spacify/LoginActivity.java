@@ -16,10 +16,19 @@ import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import co.broccli.logic.SessionManager;
+import co.broccli.logic.model.OAuth2AccessToken.AccessTokenRequest;
+import co.broccli.logic.model.OAuth2AccessToken.OAuth2AccessToken;
+import co.broccli.logic.rest.ApiClient;
+import co.broccli.logic.rest.ApiInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
+    private SessionManager sessionManager;
 
     @InjectView(R.id.input_email)
     EditText _emailText;
@@ -71,20 +80,36 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String email = _emailText.getText().toString();
+        final String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
         // TODO: Implement your own authentication logic here.
+        ApiInterface apiService =
+                ApiClient.createService(ApiInterface.class, getApplicationContext());
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-                        onLoginSuccess();
-                        // onLoginFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
+        Call<OAuth2AccessToken> call =
+                apiService.getAccessTokenData(new AccessTokenRequest(email, password));
+
+        call.enqueue(new Callback<OAuth2AccessToken>() {
+            @Override
+            public void onResponse(Call<OAuth2AccessToken> call, Response<OAuth2AccessToken> response) {
+
+                if (!response.body().getAccessToken().isEmpty()) {
+                    sessionManager = new SessionManager(getApplicationContext());
+                    sessionManager.createLoginSession("", email, response.body().getAccessToken()); //TODO Add Name
+                    onLoginSuccess();
+                } else {
+                    onLoginFailed();
+                    progressDialog.dismiss();
+                }
+            }
+            @Override
+            public void onFailure(Call<OAuth2AccessToken> call, Throwable t) {
+                onLoginFailed();
+                progressDialog.dismiss();
+            }
+        });
+
     }
 
 
@@ -133,7 +158,7 @@ public class LoginActivity extends AppCompatActivity {
             _emailText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
+        if (password.isEmpty() || password.length() < 3 || password.length() > 10) {
             _passwordText.setError("between 4 and 10 alphanumeric characters");
             valid = false;
         } else {
