@@ -47,7 +47,7 @@ public class SignupActivity extends AppCompatActivity {
         Log.d(TAG, "Signup");
 
         if (!validate()) {
-            onSignupFailed();
+            onSignupFailed("Login failed, Check your inputs");
             return;
         }
 
@@ -84,8 +84,8 @@ public class SignupActivity extends AppCompatActivity {
         finish();
     }
 
-    public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+    public void onSignupFailed(String Message) {
+        Toast.makeText(getBaseContext(), Message, Toast.LENGTH_LONG).show();
 
         _signupButton.setEnabled(true);
     }

@@ -19,6 +19,7 @@ public class ApiClient {
     private static  SessionManager sessionManager;
     private static  String AccessToken;
     public static final String BASE_URL = "http://api.broccli.co/";
+    private static Retrofit retrofit;
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
     private static Retrofit.Builder builder =
             new Retrofit.Builder()
@@ -51,7 +52,11 @@ public class ApiClient {
         }
 
         OkHttpClient client = httpClient.build();
-        Retrofit retrofit = builder.client(client).build();
+        retrofit = builder.client(client).build();
         return retrofit.create(serviceClass);
+    }
+
+    public static Retrofit getRetrofit() {
+        return retrofit;
     }
 }

@@ -17,6 +17,8 @@ import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import co.broccli.logic.SessionManager;
+import co.broccli.logic.model.APIError.APIError;
+import co.broccli.logic.model.APIError.ErrorUtils;
 import co.broccli.logic.model.OAuth2AccessToken.AccessTokenRequest;
 import co.broccli.logic.model.OAuth2AccessToken.OAuth2AccessToken;
 import co.broccli.logic.rest.ApiClient;
@@ -68,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         Log.d(TAG, "Login");
 
         if (!validate()) {
-            onLoginFailed();
+            onLoginFailed("Login failed, Check your inputs");
             return;
         }
 
@@ -94,18 +96,24 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<OAuth2AccessToken> call, Response<OAuth2AccessToken> response) {
 
-                if (!response.body().getAccessToken().isEmpty()) {
-                    sessionManager = new SessionManager(getApplicationContext());
-                    sessionManager.createLoginSession("", email, response.body().getAccessToken()); //TODO Add Name
-                    onLoginSuccess();
+                if (response.isSuccessful()) {
+                    if (!response.body().getAccessToken().isEmpty()) {
+                        sessionManager = new SessionManager(getApplicationContext());
+                        sessionManager.createLoginSession("", email, response.body().getAccessToken()); //TODO Add Name
+                        onLoginSuccess();
+                    } else {
+                        onLoginFailed("Login failed, Try again later");
+                        progressDialog.dismiss();
+                    }
                 } else {
-                    onLoginFailed();
+                    APIError error = ErrorUtils.parseError(response);
+                    onLoginFailed(error.getMessage());
                     progressDialog.dismiss();
                 }
             }
             @Override
             public void onFailure(Call<OAuth2AccessToken> call, Throwable t) {
-                onLoginFailed();
+                onLoginFailed("Login failed, Try again later");
                 progressDialog.dismiss();
             }
         });
@@ -139,8 +147,8 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+    public void onLoginFailed(String message) {
+        Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
 
         _loginButton.setEnabled(true);
     }
@@ -158,7 +166,7 @@ public class LoginActivity extends AppCompatActivity {
             _emailText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 3 || password.length() > 10) {
+        if (password.isEmpty() || password.length() < 3 ) {
             _passwordText.setError("between 4 and 10 alphanumeric characters");
             valid = false;
         } else {
