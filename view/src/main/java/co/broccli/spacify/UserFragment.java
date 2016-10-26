@@ -1,6 +1,7 @@
 package co.broccli.spacify;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +17,7 @@ import co.broccli.logic.SessionManager;
 import co.broccli.logic.model.protectedPath.protectedPath;
 import co.broccli.logic.rest.ApiClient;
 import co.broccli.logic.rest.ApiInterface;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,6 +53,31 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 sessionManager = new SessionManager(getContext());
+
+                final ProgressDialog progressDialog = new ProgressDialog(getContext(),
+                        R.style.AppTheme_Dark_Dialog);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setMessage("Signing out...");
+                progressDialog.show();
+
+                // Logout user from the server (Revoke Access Token)
+                ApiInterface apiService =
+                        ApiClient.createService(ApiInterface.class, getContext());
+                Call<ResponseBody> call = apiService.logout();
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        // Do nothing
+                    }
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        // Do nothing
+                    }
+                });
+
+                progressDialog.dismiss();
+
+                // Logout user from app
                 sessionManager.logoutUser(LoginActivity.class);
             }
         });
