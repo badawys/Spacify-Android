@@ -1,5 +1,6 @@
 package co.broccli.spacify;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -11,9 +12,16 @@ import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import co.broccli.logic.model.signup.Signup;
+import co.broccli.logic.rest.ApiClient;
+import co.broccli.logic.rest.ApiInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
+    private Intent resultIntent = new Intent();
 
     @InjectView(R.id.input_name) EditText _nameText;
     @InjectView(R.id.input_email) EditText _emailText;
@@ -47,7 +55,7 @@ public class SignupActivity extends AppCompatActivity {
         Log.d(TAG, "Signup");
 
         if (!validate()) {
-            onSignupFailed("Login failed, Check your inputs");
+            onSignupFailed("Signup failed, Check your inputs");
             return;
         }
 
@@ -63,24 +71,41 @@ public class SignupActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        // TODO: Implement your own signup logic here.
+        resultIntent.putExtra("email", email);
+        resultIntent.putExtra("password", password);
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onSignupSuccess or onSignupFailed
-                        // depending on success
-                        onSignupSuccess();
-                        // onSignupFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
+
+        ApiInterface apiService =
+                ApiClient.createService(ApiInterface.class, getApplicationContext());
+
+        Call<Signup> call =
+                apiService.signup(name, email, password);
+
+        call.enqueue(new Callback<Signup>() {
+            @Override
+            public void onResponse(Call<Signup> call, Response<Signup> response) {
+
+                if (response.isSuccessful()) {
+                    progressDialog.dismiss();
+                    onSignupSuccess();
+
+                } else {
+                    progressDialog.dismiss();
+                    onSignupFailed("Signup failed");
+                }
+            }
+            @Override
+            public void onFailure(Call<Signup> call, Throwable t) {
+                progressDialog.dismiss();
+                onSignupFailed("Signup failed");
+            }
+        });
+
     }
-
 
     public void onSignupSuccess() {
         _signupButton.setEnabled(true);
-        //setResult(RESULT_OK, null);
+        setResult(RESULT_OK, resultIntent);
         finish();
     }
 

@@ -76,16 +76,20 @@ public class LoginActivity extends AppCompatActivity {
 
         _loginButton.setEnabled(false);
 
+        final String email = _emailText.getText().toString();
+        String password = _passwordText.getText().toString();
+
+        doLogin(email, password);
+    }
+
+    protected void doLogin (final String email, final String password) {
+
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        final String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
-
-        // TODO: Implement your own authentication logic here.
         ApiInterface apiService =
                 ApiClient.createService(ApiInterface.class, getApplicationContext());
 
@@ -117,18 +121,16 @@ public class LoginActivity extends AppCompatActivity {
                 progressDialog.dismiss();
             }
         });
-
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == RESULT_OK) {
+                String email = data.getExtras().getString("email");
+                String password = data.getExtras().getString("password");
 
-                // TODO: Implement successful signup logic here
-                // By default we just finish the Activity and log them in automatically
-                this.finish();
+                doLogin(email, password);
             }
         }
     }
