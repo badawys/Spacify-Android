@@ -16,10 +16,21 @@ import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import co.broccli.logic.SessionManager;
+import co.broccli.logic.model.APIError.APIError;
+import co.broccli.logic.model.APIError.ErrorUtils;
+import co.broccli.logic.model.OAuth2AccessToken.AccessTokenRequest;
+import co.broccli.logic.model.OAuth2AccessToken.OAuth2AccessToken;
+import co.broccli.logic.rest.ApiClient;
+import co.broccli.logic.rest.ApiInterface;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
+    private SessionManager sessionManager;
 
     @InjectView(R.id.input_email)
     EditText _emailText;
@@ -59,11 +70,19 @@ public class LoginActivity extends AppCompatActivity {
         Log.d(TAG, "Login");
 
         if (!validate()) {
-            onLoginFailed();
+            onLoginFailed("Login failed, Check your inputs");
             return;
         }
 
         _loginButton.setEnabled(false);
+
+        final String email = _emailText.getText().toString();
+        String password = _passwordText.getText().toString();
+
+        doLogin(email, password);
+    }
+
+    protected void doLogin (final String email, final String password) {
 
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
@@ -71,31 +90,47 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
+        ApiInterface apiService =
+                ApiClient.createService(ApiInterface.class, getApplicationContext());
 
-        // TODO: Implement your own authentication logic here.
+        Call<OAuth2AccessToken> call =
+                apiService.getAccessTokenData(new AccessTokenRequest(email, password));
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
+        call.enqueue(new Callback<OAuth2AccessToken>() {
+            @Override
+            public void onResponse(Call<OAuth2AccessToken> call, Response<OAuth2AccessToken> response) {
+
+                if (response.isSuccessful()) {
+                    if (!response.body().getAccessToken().isEmpty()) {
+                        sessionManager = new SessionManager(getApplicationContext());
+                        sessionManager.createLoginSession("", email, response.body().getAccessToken()); //TODO Add Name
                         onLoginSuccess();
-                        // onLoginFailed();
+                    } else {
+                        onLoginFailed("Login failed, Try again later");
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                } else {
+                    APIError error = ErrorUtils.parseError(response);
+                    onLoginFailed(error.getMessage());
+                    progressDialog.dismiss();
+                }
+            }
+            @Override
+            public void onFailure(Call<OAuth2AccessToken> call, Throwable t) {
+                onLoginFailed("Login failed, Try again later");
+                progressDialog.dismiss();
+            }
+        });
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == RESULT_OK) {
+                String email = data.getExtras().getString("email");
+                String password = data.getExtras().getString("password");
 
-                // TODO: Implement successful signup logic here
-                // By default we just finish the Activity and log them in automatically
-                this.finish();
+                doLogin(email, password);
             }
         }
     }
@@ -114,8 +149,8 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+    public void onLoginFailed(String message) {
+        Toast.makeText(getBaseContext(), message, Toast.LENGTH_LONG).show();
 
         _loginButton.setEnabled(true);
     }
@@ -133,7 +168,7 @@ public class LoginActivity extends AppCompatActivity {
             _emailText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
+        if (password.isEmpty() || password.length() < 3 ) {
             _passwordText.setError("between 4 and 10 alphanumeric characters");
             valid = false;
         } else {

@@ -19,6 +19,8 @@
     <string name="can_not_load_your_feed">لا يمكن عرض آخر الأخبار حاليا :(</string>
     <string name="notifications">التنبيهات</string>
     <string name="oops">سحقاً</string>
+    <string name="title_activity_login">تسجيل الدخول</string>
+    <string name="title_activity_signup">تسجيل مستخدم جديد</string>
 
 
 </resources>
