@@ -14,8 +14,8 @@ import android.util.Log;
 import android.content.Intent;
 import android.widget.Toast;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import co.broccli.logic.SessionManager;
 import co.broccli.logic.model.APIError.APIError;
 import co.broccli.logic.model.APIError.ErrorUtils;
@@ -32,20 +32,20 @@ public class LoginActivity extends AppCompatActivity {
     private static final int REQUEST_SIGNUP = 0;
     private SessionManager sessionManager;
 
-    @InjectView(R.id.input_email)
+    @BindView(R.id.input_email)
     EditText _emailText;
-    @InjectView(R.id.input_password)
+    @BindView(R.id.input_password)
     EditText _passwordText;
-    @InjectView(R.id.btn_login)
+    @BindView(R.id.btn_login)
     Button _loginButton;
-    @InjectView(R.id.link_signup)
+    @BindView(R.id.link_signup)
     TextView _signupLink;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
 
