@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -16,7 +17,6 @@ import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import co.broccli.logic.SessionManager;
@@ -41,6 +41,7 @@ public class UserFragment extends Fragment {
     private SimpleDraweeView headerBackground;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private FancyButton logoutButton;
 
     public UserFragment() {
         // Required empty public constructor
@@ -62,7 +63,14 @@ public class UserFragment extends Fragment {
         userName = (TextView) view.findViewById(R.id.userName);
         tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
         viewPager = (ViewPager) view.findViewById(R.id.tab_pager);
-        FancyButton logoutButton = (FancyButton) view.findViewById(R.id.logoutButton);
+        logoutButton = (FancyButton) view.findViewById(R.id.logoutButton);
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         setUsername ();
         setProfilephoto ();
@@ -75,11 +83,7 @@ public class UserFragment extends Fragment {
                 onClickLogout();
             }
         });
-
-        return view;
     }
-
-
 
     /**
      * ToDo: Add Description
@@ -212,4 +216,5 @@ public class UserFragment extends Fragment {
         // Logout user from app
         sessionManager.logoutUser(LoginActivity.class);
     }
+
 }
