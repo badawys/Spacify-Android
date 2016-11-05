@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/joined_space_item"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/space_photo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        fresco:roundedCornerRadius="50dp"
+        fresco:placeholderImage="@color/iron"
+        tools:background="@color/colorPrimary"
+        android:layout_centerVertical="true"/>
+
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/space_joined_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
+        android:layout_centerVertical="true"
+        android:paddingBottom="4dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="4dp"
+        fancy:fb_defaultColor="#7ab800"
+        fancy:fb_focusColor="#9bd823"
+        fancy:fb_fontIconResource="&#xf00c;"
+        fancy:fb_iconPosition="left"
+        fancy:fb_textSize="12sp"
+        fancy:fb_text="JOIEND"
+        fancy:fb_textColor="#FFFFFF"/>
+
+    <TextView
+        android:id="@+id/space_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/space_photo"
+        android:layout_toStartOf="@id/space_joined_button"
+        tools:text="Space Name"
+        android:textSize="15sp"
+        android:padding="16dp"
+        android:gravity="center_vertical"
+        android:layout_centerVertical="true"/>
+
+
+</RelativeLayout>
