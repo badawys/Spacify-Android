@@ -10,6 +10,7 @@ public class User {
     private Integer id;
     private String name;
     private String email;
+    private String photo;
     private Integer status;
     private String confirmationCode;
     private Integer confirmed;
@@ -70,6 +71,24 @@ public class User {
      */
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /**
+     *
+     * @return
+     * The photo
+     */
+    public String getPhoto() {
+        return photo;
+    }
+
+    /**
+     *
+     * @param photo
+     * The photo
+     */
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     /**
