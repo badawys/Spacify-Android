@@ -13,7 +13,7 @@ public class ProfileTabFragmentBase extends Fragment implements ObservableScroll
     private LinearLayout profileHeader;
     private LinearLayout profileTabLayout;
     private boolean profileTabLayoutIsExtended = false;
-    private LinearLayout.LayoutParams defaultProfileTapLayoutParms;
+    private LinearLayout.LayoutParams defaultProfileTapLayoutParams;
 
     private LinearLayoutManager linearLayoutManager;
 
@@ -27,7 +27,7 @@ public class ProfileTabFragmentBase extends Fragment implements ObservableScroll
 
     public void setProfileTabLayout(LinearLayout profileTabLayout) {
         this.profileTabLayout = profileTabLayout;
-        this.defaultProfileTapLayoutParms = (LinearLayout.LayoutParams) profileTabLayout.getLayoutParams();
+        this.defaultProfileTapLayoutParams = (LinearLayout.LayoutParams) profileTabLayout.getLayoutParams();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ProfileTabFragmentBase extends Fragment implements ObservableScroll
             if (linearLayoutManager.findFirstVisibleItemPosition() == 0) {
                 moveProfileHeader(0);
                 if (profileTabLayoutIsExtended) {
-                    profileTabLayout.setLayoutParams(defaultProfileTapLayoutParms);
+                    profileTabLayout.setLayoutParams(defaultProfileTapLayoutParams);
                     profileTabLayout.requestLayout();
                     profileTabLayoutIsExtended = false;
                 }
@@ -80,7 +80,6 @@ public class ProfileTabFragmentBase extends Fragment implements ObservableScroll
         });
         animator.start();
     }
-
 
     private int getContainerHeight() {
         return (getActivity().findViewById(R.id.fragment_container)).getHeight();

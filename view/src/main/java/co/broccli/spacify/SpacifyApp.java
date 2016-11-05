@@ -23,7 +23,6 @@ public class SpacifyApp extends Application {
             ) {
                 Log.e(this.getClass().getSimpleName(), "Thread and exception details:", paramThrowable);
                 paramThrowable.printStackTrace();
-
                 if (oldHandler != null)
                     oldHandler.uncaughtException(
                             paramThread,
