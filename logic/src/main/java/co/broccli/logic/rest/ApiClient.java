@@ -16,7 +16,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    private static  SessionManager sessionManager;
     private static  String AccessToken;
     public static final String BASE_URL = "http://api.broccli.co/";
     private static Retrofit retrofit;
@@ -28,11 +27,10 @@ public class ApiClient {
 
     public static <S> S createService(Class<S> serviceClass, Context context) {
 
-        sessionManager = new SessionManager(context);
+        SessionManager  sessionManager = new SessionManager(context);
 
         // get user data from session
-        HashMap<String, String> user = sessionManager.getUserDetails();
-        AccessToken = user.get(sessionManager.ACCESS_TOKEN);
+        AccessToken = sessionManager.getLoggedInAccessToken();
 
         if (AccessToken != null) {
             httpClient.addInterceptor(new Interceptor() {

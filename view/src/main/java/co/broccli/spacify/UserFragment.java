@@ -20,6 +20,7 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import co.broccli.logic.SessionManager;
+import co.broccli.logic.SpacifyApi;
 import co.broccli.logic.model.protectedPath.protectedPath;
 import co.broccli.logic.rest.ApiClient;
 import co.broccli.logic.rest.ApiInterface;
@@ -187,34 +188,7 @@ public class UserFragment extends Fragment {
      * ToDo: Add Description
      */
     private void onClickLogout () {
-
-        SessionManager sessionManager = new SessionManager(getContext());
-
-        final ProgressDialog progressDialog = new ProgressDialog(getContext(),
-                R.style.AppTheme_Dark_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Signing out...");
-        progressDialog.show();
-
-        // Logout user from the server (Revoke Access Token)
-        ApiInterface apiService =
-                ApiClient.createService(ApiInterface.class, getContext());
-        Call<ResponseBody> call = apiService.logout();
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                // Do nothing
-            }
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                // Do nothing
-            }
-        });
-
-        progressDialog.dismiss();
-
-        // Logout user from app
-        sessionManager.logoutUser(LoginActivity.class);
+        SpacifyApi.auth().logout(getContext());
     }
 
 }
