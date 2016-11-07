@@ -21,6 +21,8 @@
     <string name="oops">سحقاً</string>
     <string name="title_activity_login">تسجيل الدخول</string>
     <string name="title_activity_signup">تسجيل مستخدم جديد</string>
+    <string name="joined_spaces">المساحات المسجلة</string>
+    <string name="my_spaces">مساحاتي</string>
 
 
 </resources>

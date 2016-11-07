@@ -1,14 +1,15 @@
 apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
 
 android {
     signingConfigs {
     }
-    compileSdkVersion 23
-    buildToolsVersion "24.0.1"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId 'co.broccli.spacify'
         minSdkVersion 19
-        targetSdkVersion 23
+        targetSdkVersion 25
         versionName 'Alpha-1.0'
         versionCode 2
     }
@@ -33,14 +34,24 @@ repositories {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
+    compile project(':logic')
+    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.android.support:design:25.0.0'
     compile 'com.roughike:bottom-bar:2.0.2'
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
-    compile 'com.android.support:support-v4:23.4.0'
-    compile 'com.android.support:recyclerview-v7:23.4.0'
-    compile 'com.android.support:cardview-v7:23.4.0'
-    compile 'com.marshalchen.ultimaterecyclerview:library:0.7.0'
-    compile 'com.jakewharton:butterknife:6.1.0'
-    compile project(':logic')
+    compile 'com.android.support:support-v4:25.0.0'
+    compile 'com.android.support:recyclerview-v7:25.0.0'
+    compile 'com.android.support:cardview-v7:25.0.0'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.facebook.fresco:fresco:0.14.1'
+    compile 'com.github.medyo:fancybuttons:1.8.2'
+    compile 'com.github.ksoichiro:android-observablescrollview:1.6.0'
+    compile 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
+    compile 'jp.wasabeef:fresco-processors:2.0.0'
+    compile('com.mikepenz:fastadapter:2.0.0@aar') {
+        transitive = true
+    }
+    compile 'com.mikepenz:fastadapter-extensions:2.0.0@aar'
+    compile 'com.mikepenz:materialize:1.0.0@aar'
 }

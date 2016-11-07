@@ -10,30 +10,25 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import co.broccli.logic.model.signup.Signup;
-import co.broccli.logic.rest.ApiClient;
-import co.broccli.logic.rest.ApiInterface;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import co.broccli.logic.SpacifyApi;
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
     private Intent resultIntent = new Intent();
 
-    @InjectView(R.id.input_name) EditText _nameText;
-    @InjectView(R.id.input_email) EditText _emailText;
-    @InjectView(R.id.input_password) EditText _passwordText;
-    @InjectView(R.id.btn_signup) Button _signupButton;
-    @InjectView(R.id.link_login) TextView _loginLink;
+    @BindView(R.id.input_name) EditText _nameText;
+    @BindView(R.id.input_email) EditText _emailText;
+    @BindView(R.id.input_password) EditText _passwordText;
+    @BindView(R.id.btn_signup) Button _signupButton;
+    @BindView(R.id.link_login) TextView _loginLink;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,33 +69,19 @@ public class SignupActivity extends AppCompatActivity {
         resultIntent.putExtra("email", email);
         resultIntent.putExtra("password", password);
 
-
-        ApiInterface apiService =
-                ApiClient.createService(ApiInterface.class, getApplicationContext());
-
-        Call<Signup> call =
-                apiService.signup(name, email, password);
-
-        call.enqueue(new Callback<Signup>() {
+        SpacifyApi.auth().signup(this, name, email, password, new co.broccli.logic.Callback<Boolean>() {
             @Override
-            public void onResponse(Call<Signup> call, Response<Signup> response) {
-
-                if (response.isSuccessful()) {
-                    progressDialog.dismiss();
-                    onSignupSuccess();
-
-                } else {
-                    progressDialog.dismiss();
-                    onSignupFailed("Signup failed");
-                }
-            }
-            @Override
-            public void onFailure(Call<Signup> call, Throwable t) {
+            public void onResult(Boolean aBoolean) {
                 progressDialog.dismiss();
-                onSignupFailed("Signup failed");
+                onSignupSuccess();
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                progressDialog.dismiss();
+                onSignupFailed(errorMessage);
             }
         });
-
     }
 
     public void onSignupSuccess() {
