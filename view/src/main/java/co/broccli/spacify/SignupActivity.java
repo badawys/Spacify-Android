@@ -13,12 +13,6 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.broccli.logic.SpacifyApi;
-import co.broccli.logic.model.signup.Signup;
-import co.broccli.logic.rest.ApiClient;
-import co.broccli.logic.rest.ApiInterface;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";

@@ -1,6 +1,5 @@
 package co.broccli.spacify;
 
-import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,21 +18,15 @@ import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
-import co.broccli.logic.SessionManager;
+import co.broccli.logic.Callback;
 import co.broccli.logic.SpacifyApi;
-import co.broccli.logic.model.protectedPath.protectedPath;
-import co.broccli.logic.rest.ApiClient;
-import co.broccli.logic.rest.ApiInterface;
+import co.broccli.logic.model.profile.User;
 import co.broccli.spacify.Helper.FrascoRepeatedPostProcessor;
 import co.broccli.spacify.Profile.JoinedSpaces.JoinedSpacesFragmant;
 import co.broccli.spacify.Profile.MySpaces.MySpacesFragment;
 import jp.wasabeef.fresco.processors.BlurPostprocessor;
 import jp.wasabeef.fresco.processors.ColorFilterPostprocessor;
 import mehdi.sakout.fancybuttons.FancyButton;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class UserFragment extends Fragment {
 
@@ -73,10 +66,8 @@ public class UserFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        setUsername ();
-        setProfilephoto ();
-        setHeaderBackground();
-        setProfileTabs();
+        setProfileTabs ();
+        getProfileData ();
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,68 +77,60 @@ public class UserFragment extends Fragment {
         });
     }
 
-    /**
-     * ToDo: Add Description
-     */
-    private void setHeaderBackground () {
+    private void getProfileData () {
+        SpacifyApi.profile().getUserProfile(getContext(), new Callback<User>() {
+            @Override
+            public void onResult(User user) {
+                setUsername(user.getName());
+                setProfilePhoto (user.getPhoto());
+            }
 
-        Uri uri = Uri.parse("https://scontent-cai1-1.xx.fbcdn.net/v/t1.0-9/12314120_10206938908184467_3626450146143059050_n.jpg?oh=b434b06225d532e669fee0e7a69a9601&oe=5887EA3C");
+            @Override
+            public void onError(String errorMessage) {
 
-        FrascoRepeatedPostProcessor repeatedPostProcessor = new FrascoRepeatedPostProcessor();
-        ImageRequest headerBackgroundRequest = ImageRequestBuilder.newBuilderWithSource(uri)
-                .setPostprocessor(repeatedPostProcessor)
-                .build();
-
-        PipelineDraweeController controller =
-                (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
-                        .setImageRequest(headerBackgroundRequest)
-                        .setOldController(headerBackground.getController())
-                        .build();
-
-        headerBackground.setController(controller);
-        repeatedPostProcessor.apply(new BlurPostprocessor (getContext(), 150));
-        repeatedPostProcessor.apply(new ColorFilterPostprocessor(Color.argb(80, 0, 0, 0)));
-
+            }
+        });
     }
 
     /**
      * ToDo: Add Description
      */
-    private void setProfilephoto () {
+    private void setProfilePhoto (String url) {
 
-        Uri uri = Uri.parse("https://scontent-cai1-1.xx.fbcdn.net/v/t1.0-9/12314120_10206938908184467_3626450146143059050_n.jpg?oh=b434b06225d532e669fee0e7a69a9601&oe=5887EA3C");
+        Uri uri = Uri.parse("http://spacify.s3.amazonaws.com/" + url);
+        FrascoRepeatedPostProcessor repeatedPostProcessor = new FrascoRepeatedPostProcessor();
 
         ImageRequest profilePhotoRequest = ImageRequestBuilder
                 .newBuilderWithSource(uri)
                 .build();
+        ImageRequest backgroundPhotoRequest = ImageRequestBuilder
+                .newBuilderWithSource(uri)
+                .setPostprocessor(repeatedPostProcessor)
+                .build();
 
-        PipelineDraweeController controller =
+        PipelineDraweeController photoController =
                 (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
                         .setImageRequest(profilePhotoRequest)
                         .setOldController(profilePhoto.getController())
                         .build();
-        profilePhoto.setController(controller);
+        PipelineDraweeController backgroundController =
+                (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
+                        .setImageRequest(backgroundPhotoRequest)
+                        .setOldController(headerBackground.getController())
+                        .build();
+
+        profilePhoto.setController(photoController);
+        headerBackground.setController(backgroundController);
+
+        repeatedPostProcessor.apply(new BlurPostprocessor(getContext(), 150));
+        repeatedPostProcessor.apply(new ColorFilterPostprocessor(Color.argb(80, 0, 0, 0)));
     }
 
     /**
      * ToDo: Add Description
      */
-    private void setUsername () {
-        ApiInterface apiService =
-                ApiClient.createService(ApiInterface.class, getContext());
-        Call<protectedPath> call = apiService.getUser();
-        call.enqueue(new Callback<protectedPath>() {
-            @Override
-            public void onResponse(Call<protectedPath> call, Response<protectedPath> response) {
-
-                userName.setText(response.body().getUser().getName());
-            }
-
-            @Override
-            public void onFailure(Call<protectedPath> call, Throwable t) {
-
-            }
-        });
+    private void setUsername (String name) {
+        userName.setText(name);
     }
 
 
