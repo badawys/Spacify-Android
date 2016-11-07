@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import co.broccli.logic.SpacifyApi;
 import co.broccli.logic.model.signup.Signup;
 import co.broccli.logic.rest.ApiClient;
 import co.broccli.logic.rest.ApiInterface;
@@ -74,33 +75,19 @@ public class SignupActivity extends AppCompatActivity {
         resultIntent.putExtra("email", email);
         resultIntent.putExtra("password", password);
 
-
-        ApiInterface apiService =
-                ApiClient.createService(ApiInterface.class, getApplicationContext());
-
-        Call<Signup> call =
-                apiService.signup(name, email, password);
-
-        call.enqueue(new Callback<Signup>() {
+        SpacifyApi.auth().signup(this, name, email, password, new co.broccli.logic.Callback<Boolean>() {
             @Override
-            public void onResponse(Call<Signup> call, Response<Signup> response) {
-
-                if (response.isSuccessful()) {
-                    progressDialog.dismiss();
-                    onSignupSuccess();
-
-                } else {
-                    progressDialog.dismiss();
-                    onSignupFailed("Signup failed");
-                }
-            }
-            @Override
-            public void onFailure(Call<Signup> call, Throwable t) {
+            public void onResult(Boolean aBoolean) {
                 progressDialog.dismiss();
-                onSignupFailed("Signup failed");
+                onSignupSuccess();
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                progressDialog.dismiss();
+                onSignupFailed(errorMessage);
             }
         });
-
     }
 
     public void onSignupSuccess() {
