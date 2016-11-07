@@ -13,9 +13,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.broccli.spacify.R;
 
-public class MySpacesItem extends AbstractItem<MySpacesItem, MySpacesItem.ViewHolder> {
+class MySpacesItem extends AbstractItem<MySpacesItem, MySpacesItem.ViewHolder> {
 
-    protected String imageURL;
+    private String imageURL;
     protected String name;
 
     public MySpacesItem withImageURL(String imageURL) {

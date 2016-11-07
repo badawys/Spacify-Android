@@ -6,6 +6,8 @@ import android.util.Log;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 
+import co.broccli.logic.SpacifyApi;
+
 public class SpacifyApp extends Application {
 
     @Override
@@ -34,5 +36,8 @@ public class SpacifyApp extends Application {
         });
 
         Fresco.initialize(this);
+
+        SpacifyApi.initialize(this)
+                .setLoginActivity(LoginActivity.class);
     }
 }
