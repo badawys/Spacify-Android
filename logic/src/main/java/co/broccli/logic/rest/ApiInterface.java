@@ -2,7 +2,7 @@ package co.broccli.logic.rest;
 
 import co.broccli.logic.model.OAuth2AccessToken.AccessTokenRequest;
 import co.broccli.logic.model.OAuth2AccessToken.OAuth2AccessToken;
-import co.broccli.logic.model.protectedPath.protectedPath;
+import co.broccli.logic.model.profile.User;
 import co.broccli.logic.model.signup.Signup;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -11,6 +11,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import rx.Observable;
 
 public interface ApiInterface {
 
@@ -21,8 +22,8 @@ public interface ApiInterface {
      *
      * @return User
      */
-    @GET("protected")
-    Call<protectedPath> getUser();
+    @GET("profile/name,photo,email")
+    Call<User> getUser();
 
     /**
      *  Login user call

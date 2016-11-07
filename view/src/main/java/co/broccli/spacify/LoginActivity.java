@@ -16,21 +16,12 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import co.broccli.logic.SessionManager;
-import co.broccli.logic.model.APIError.APIError;
-import co.broccli.logic.model.APIError.ErrorUtils;
-import co.broccli.logic.model.OAuth2AccessToken.AccessTokenRequest;
-import co.broccli.logic.model.OAuth2AccessToken.OAuth2AccessToken;
-import co.broccli.logic.rest.ApiClient;
-import co.broccli.logic.rest.ApiInterface;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import co.broccli.logic.Callback;
+import co.broccli.logic.SpacifyApi;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
-    private SessionManager sessionManager;
 
     @BindView(R.id.input_email)
     EditText _emailText;
@@ -90,34 +81,16 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        ApiInterface apiService =
-                ApiClient.createService(ApiInterface.class, getApplicationContext());
-
-        Call<OAuth2AccessToken> call =
-                apiService.getAccessTokenData(new AccessTokenRequest(email, password));
-
-        call.enqueue(new Callback<OAuth2AccessToken>() {
+        SpacifyApi.auth().login(this, email, password, new Callback<Boolean>() {
             @Override
-            public void onResponse(Call<OAuth2AccessToken> call, Response<OAuth2AccessToken> response) {
-
-                if (response.isSuccessful()) {
-                    if (!response.body().getAccessToken().isEmpty()) {
-                        sessionManager = new SessionManager(getApplicationContext());
-                        sessionManager.createLoginSession("", email, response.body().getAccessToken()); //TODO Add Name
-                        onLoginSuccess();
-                    } else {
-                        onLoginFailed("Login failed, Try again later");
-                        progressDialog.dismiss();
-                    }
-                } else {
-                    APIError error = ErrorUtils.parseError(response);
-                    onLoginFailed(error.getMessage());
-                    progressDialog.dismiss();
-                }
+            public void onResult(Boolean aBoolean) {
+                onLoginSuccess();
+                progressDialog.dismiss();
             }
+
             @Override
-            public void onFailure(Call<OAuth2AccessToken> call, Throwable t) {
-                onLoginFailed("Login failed, Try again later");
+            public void onError(String errorMessage) {
+                onLoginFailed(errorMessage);
                 progressDialog.dismiss();
             }
         });
