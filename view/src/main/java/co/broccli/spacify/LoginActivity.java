@@ -17,13 +17,11 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.broccli.logic.Callback;
-import co.broccli.logic.SessionManager;
 import co.broccli.logic.SpacifyApi;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
-    private SessionManager sessionManager;
 
     @BindView(R.id.input_email)
     EditText _emailText;

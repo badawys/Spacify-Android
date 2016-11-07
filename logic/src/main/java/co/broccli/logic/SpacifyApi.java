@@ -72,4 +72,13 @@ public class SpacifyApi {
     public static Auth auth () {
         return Auth.getInstance(mInstance.sessionManager, mloginActivity);
     }
+
+    /**
+     * All the user profile related operations
+     *
+     * @return instance if Auth class
+     */
+    public static Profile profile () {
+        return Profile.getInstance(mInstance.sessionManager);
+    }
 }
