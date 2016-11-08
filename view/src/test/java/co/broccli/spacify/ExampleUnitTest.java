@@ -2,6 +2,8 @@ package co.broccli.spacify;
 
 import org.junit.Test;
 
+import co.broccli.logic.SessionManager;
+
 import static org.junit.Assert.*;
 
 /**

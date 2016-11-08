@@ -18,6 +18,7 @@
             android:orientation="vertical">
 
             <FrameLayout
+                android:id="@+id/profile_header_inner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -28,6 +29,7 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
                     fresco:placeholderImage="@color/base" />
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
