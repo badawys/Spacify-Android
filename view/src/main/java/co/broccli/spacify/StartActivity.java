@@ -22,6 +22,12 @@ import co.broccli.logic.SpacifyApi;
 public class StartActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    final Fragment feedFragment = FeedFragment.newInstance();
+    final Fragment nearbyFragment = NearbyFragment.newInstance();
+    final Fragment userFragment = UserFragment.newInstance();
+    Fragment active = feedFragment;
+    final FragmentManager fm = getSupportFragmentManager();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,25 +57,31 @@ public class StartActivity extends AppCompatActivity
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         assert bottomBar != null;
 
+        fm.beginTransaction().add(R.id.fragment_container, userFragment, "3").commit();
+        fm.beginTransaction().add(R.id.fragment_container, nearbyFragment, "2").commit();
+        fm.beginTransaction().add(R.id.fragment_container, feedFragment, "1").commit();
+
+        fm.beginTransaction().hide(userFragment).commit();
+        fm.beginTransaction().hide(nearbyFragment).commit();
+        active = feedFragment;
+
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
                 if (tabId == R.id.tab_feed) {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, FeedFragment.newInstance())
-                            .commit();
+                    if(active != feedFragment)
+                        fm.beginTransaction().hide(active).show(feedFragment).commit();
+                    active = feedFragment;
                 }
 
                 if (tabId == R.id.tab_nearby) {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, NearbyFragment.newInstance())
-                            .commit();
+                    fm.beginTransaction().hide(active).show(nearbyFragment).commit();
+                    active = nearbyFragment;
                 }
 
                 if (tabId == R.id.tab_user) {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, UserFragment.newInstance())
-                            .commit();
+                    fm.beginTransaction().hide(active).show(userFragment).commit();
+                    active = userFragment;
                 }
             }
         });
