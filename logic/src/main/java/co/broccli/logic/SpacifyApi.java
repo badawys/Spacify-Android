@@ -3,6 +3,8 @@ package co.broccli.logic;
 import android.content.Context;
 import android.util.Log;
 
+import com.anupcowkur.reservoir.Reservoir;
+
 public class SpacifyApi {
 
     /**
@@ -36,6 +38,7 @@ public class SpacifyApi {
         if(mInstance == null) {
             mInstance = new SpacifyApi();
             mInstance.initializeSessionManager(context);
+            Offline.init(context);
         } else {
             Log.w(
                     TAG,
@@ -79,6 +82,6 @@ public class SpacifyApi {
      * @return instance if Auth class
      */
     public static Profile profile () {
-        return Profile.getInstance(mInstance.sessionManager);
+        return Profile.getInstance();
     }
 }
