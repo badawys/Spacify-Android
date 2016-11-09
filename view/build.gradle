@@ -62,4 +62,5 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     compile 'fr.tvbarthel.blurdialogfragment:lib:2.2.0'
     compile 'com.github.florent37:materialtextfield:1.0.5'
+    compile 'com.victor:lib:1.0.4'
 }
