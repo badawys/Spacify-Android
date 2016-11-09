@@ -23,6 +23,11 @@
     <string name="title_activity_signup">تسجيل مستخدم جديد</string>
     <string name="joined_spaces">المساحات المسجلة</string>
     <string name="my_spaces">مساحاتي</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="edit_profile_title">EDIT PROFILE</string>
+    <string name="change_profile_picture">Change Profile Picture</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
 
 
 </resources>
