@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +23,10 @@ import co.broccli.logic.Callback;
 import co.broccli.logic.SpacifyApi;
 import co.broccli.logic.model.profile.User;
 import co.broccli.spacify.Helper.FrascoRepeatedPostProcessor;
+import co.broccli.spacify.Profile.EditProfileDialog;
 import co.broccli.spacify.Profile.JoinedSpaces.JoinedSpacesFragmant;
 import co.broccli.spacify.Profile.MySpaces.MySpacesFragment;
+import fr.tvbarthel.lib.blurdialogfragment.SupportBlurDialogFragment;
 import jp.wasabeef.fresco.processors.BlurPostprocessor;
 import jp.wasabeef.fresco.processors.ColorFilterPostprocessor;
 import mehdi.sakout.fancybuttons.FancyButton;
@@ -36,6 +39,9 @@ public class UserFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private FancyButton logoutButton;
+    private FancyButton settingsButton;
+    private FancyButton editButton;
+
 
     public UserFragment() {
         // Required empty public constructor
@@ -58,6 +64,8 @@ public class UserFragment extends Fragment {
         tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
         viewPager = (ViewPager) view.findViewById(R.id.tab_pager);
         logoutButton = (FancyButton) view.findViewById(R.id.logoutButton);
+        settingsButton = (FancyButton) view.findViewById(R.id.settingsButton);
+        editButton = (FancyButton) view.findViewById(R.id.editButton);
 
         return view;
     }
@@ -73,6 +81,20 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 onClickLogout();
+            }
+        });
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickSettings();
+            }
+        });
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickEdit();
             }
         });
     }
@@ -172,6 +194,21 @@ public class UserFragment extends Fragment {
      */
     private void onClickLogout () {
         SpacifyApi.auth().logout(getContext());
+    }
+
+    /**
+     * ToDo: Add Description
+     */
+    private void onClickEdit() {
+        FragmentManager fm = getFragmentManager();
+        SupportBlurDialogFragment editProfile = new EditProfileDialog();
+        editProfile.show(fm, "fragment_edit_profile");
+    }
+
+    /**
+     * ToDo: Add Description
+     */
+    private void onClickSettings() {
     }
 
 }
