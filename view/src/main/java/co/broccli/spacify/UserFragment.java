@@ -1,5 +1,6 @@
 package co.broccli.spacify;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -97,6 +98,13 @@ public class UserFragment extends Fragment {
                 onClickEdit();
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0 && resultCode == 1)
+            getProfileData();
     }
 
     private void getProfileData () {
@@ -202,6 +210,7 @@ public class UserFragment extends Fragment {
     private void onClickEdit() {
         FragmentManager fm = getFragmentManager();
         SupportBlurDialogFragment editProfile = new EditProfileDialog();
+        editProfile.setTargetFragment(this, 0);
         editProfile.show(fm, "fragment_edit_profile");
     }
 

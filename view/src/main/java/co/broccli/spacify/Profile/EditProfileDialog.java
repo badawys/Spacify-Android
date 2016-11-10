@@ -40,6 +40,8 @@ public class EditProfileDialog extends SupportBlurDialogFragment {
     private EditText userName;
     private EditText email;
 
+    private Uri newPhotoUri = null;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -94,7 +96,29 @@ public class EditProfileDialog extends SupportBlurDialogFragment {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialogContent.setVisibility(View.INVISIBLE);
+                rotateLoading.start();
 
+                SpacifyApi.profile().editUserProfile(
+                        getContext(),
+                        userName.getText().toString(),
+                        email.getText().toString(),
+                        newPhotoUri,
+                        new Callback<User>() {
+                            @Override
+                            public void onResult(User user) {
+                                EasyImage.clearPublicTemp(getContext());
+                                EasyImage.configuration(getContext());
+                                getTargetFragment().onActivityResult(getTargetRequestCode(), 1, new Intent());
+                                getDialog().dismiss();
+                            }
+
+                            @Override
+                            public void onError(String errorMessage) {
+                                Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                                getDialog().dismiss();
+                            }
+                        });
             }
         });
 
@@ -105,36 +129,29 @@ public class EditProfileDialog extends SupportBlurDialogFragment {
 
     @Override
     protected float getDownScaleFactor() {
-        // Allow to customize the down scale factor.
         return 5;
     }
 
     @Override
     protected int getBlurRadius() {
-        // Allow to customize the blur radius factor.
         return 7;
     }
 
     @Override
     protected boolean isActionBarBlurred() {
-        // Enable or disable the blur effect on the action bar.
-        // Disabled by default.
         return true;
     }
 
     @Override
     protected boolean isDimmingEnable() {
-        // Enable or disable the dimming effect.
-        // Disabled by default.
         return true;
     }
 
     @Override
     protected boolean isRenderScriptEnable() {
-        // Enable or disable the use of RenderScript for blurring effect
-        // Disabled by default.
         return true;
     }
+
     /**
      * ToDo: Add Description
      */
@@ -158,7 +175,7 @@ public class EditProfileDialog extends SupportBlurDialogFragment {
     private void startCrop (File imageFile) {
         UCrop.Options options = new UCrop.Options();
         options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
-        options.setCompressionQuality(100);
+        options.setCompressionQuality(70);
         options.setCircleDimmedLayer(true);
         options.setShowCropGrid(false);
 
@@ -184,12 +201,18 @@ public class EditProfileDialog extends SupportBlurDialogFragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == Activity.RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
+
             final Uri resultUri = UCrop.getOutput(data);
             setProfilePhoto(resultUri.toString());
+            newPhotoUri = resultUri;
+
         } else if (resultCode == UCrop.RESULT_ERROR) {
+
             final Throwable cropError = UCrop.getError(data);
             Toast.makeText(getContext() , cropError.getMessage(), Toast.LENGTH_SHORT).show();
+
         } else {
+
             EasyImage.handleActivityResult(requestCode, resultCode, data, getActivity(), new DefaultCallback() {
                 @Override
                 public void onImagePickerError(Exception e, EasyImage.ImageSource source, int type) {
