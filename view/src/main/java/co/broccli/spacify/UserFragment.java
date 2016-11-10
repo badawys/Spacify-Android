@@ -128,32 +128,32 @@ public class UserFragment extends Fragment {
     private void setProfilePhoto (String url) {
 
         Uri uri = Uri.parse("http://spacify.s3.amazonaws.com/" + url);
-        FrascoRepeatedPostProcessor repeatedPostProcessor = new FrascoRepeatedPostProcessor();
+//        FrascoRepeatedPostProcessor repeatedPostProcessor = new FrascoRepeatedPostProcessor();
 
         ImageRequest profilePhotoRequest = ImageRequestBuilder
                 .newBuilderWithSource(uri)
                 .build();
-        ImageRequest backgroundPhotoRequest = ImageRequestBuilder
-                .newBuilderWithSource(uri)
-                .setPostprocessor(repeatedPostProcessor)
-                .build();
+//        ImageRequest backgroundPhotoRequest = ImageRequestBuilder
+//                .newBuilderWithSource(uri)
+//                .setPostprocessor(repeatedPostProcessor)
+//                .build();
 
         PipelineDraweeController photoController =
                 (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
                         .setImageRequest(profilePhotoRequest)
                         .setOldController(profilePhoto.getController())
                         .build();
-        PipelineDraweeController backgroundController =
-                (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
-                        .setImageRequest(backgroundPhotoRequest)
-                        .setOldController(headerBackground.getController())
-                        .build();
+//        PipelineDraweeController backgroundController =
+//                (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
+//                        .setImageRequest(backgroundPhotoRequest)
+//                        .setOldController(headerBackground.getController())
+//                        .build();
 
         profilePhoto.setController(photoController);
-        headerBackground.setController(backgroundController);
+//        headerBackground.setController(backgroundController);
 
-        repeatedPostProcessor.apply(new BlurPostprocessor(getContext(), 150));
-        repeatedPostProcessor.apply(new ColorFilterPostprocessor(Color.argb(80, 0, 0, 0)));
+//        repeatedPostProcessor.apply(new BlurPostprocessor(getContext(), 150));
+//        repeatedPostProcessor.apply(new ColorFilterPostprocessor(Color.argb(80, 0, 0, 0)));
     }
 
     /**
