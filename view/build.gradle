@@ -31,6 +31,7 @@ android {
 
 repositories {
     jcenter()
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
@@ -63,4 +64,7 @@ dependencies {
     compile 'fr.tvbarthel.blurdialogfragment:lib:2.2.0'
     compile 'com.github.florent37:materialtextfield:1.0.5'
     compile 'com.victor:lib:1.0.4'
+    compile 'com.yalantis:ucrop:2.2.0-native'
+    compile 'com.github.jkwiecien:EasyImage:1.4.0'
+    compile 'com.github.tajchert:nammu:1.1.1'
 }

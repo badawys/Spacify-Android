@@ -1,5 +1,6 @@
 package co.broccli.spacify;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -99,6 +100,13 @@ public class UserFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0 && resultCode == 1)
+            getProfileData();
+    }
+
     private void getProfileData () {
         SpacifyApi.profile().getUserProfile(getContext(), new Callback<User>() {
             @Override
@@ -120,32 +128,32 @@ public class UserFragment extends Fragment {
     private void setProfilePhoto (String url) {
 
         Uri uri = Uri.parse("http://spacify.s3.amazonaws.com/" + url);
-        FrascoRepeatedPostProcessor repeatedPostProcessor = new FrascoRepeatedPostProcessor();
+//        FrascoRepeatedPostProcessor repeatedPostProcessor = new FrascoRepeatedPostProcessor();
 
         ImageRequest profilePhotoRequest = ImageRequestBuilder
                 .newBuilderWithSource(uri)
                 .build();
-        ImageRequest backgroundPhotoRequest = ImageRequestBuilder
-                .newBuilderWithSource(uri)
-                .setPostprocessor(repeatedPostProcessor)
-                .build();
+//        ImageRequest backgroundPhotoRequest = ImageRequestBuilder
+//                .newBuilderWithSource(uri)
+//                .setPostprocessor(repeatedPostProcessor)
+//                .build();
 
         PipelineDraweeController photoController =
                 (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
                         .setImageRequest(profilePhotoRequest)
                         .setOldController(profilePhoto.getController())
                         .build();
-        PipelineDraweeController backgroundController =
-                (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
-                        .setImageRequest(backgroundPhotoRequest)
-                        .setOldController(headerBackground.getController())
-                        .build();
+//        PipelineDraweeController backgroundController =
+//                (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
+//                        .setImageRequest(backgroundPhotoRequest)
+//                        .setOldController(headerBackground.getController())
+//                        .build();
 
         profilePhoto.setController(photoController);
-        headerBackground.setController(backgroundController);
+//        headerBackground.setController(backgroundController);
 
-        repeatedPostProcessor.apply(new BlurPostprocessor(getContext(), 150));
-        repeatedPostProcessor.apply(new ColorFilterPostprocessor(Color.argb(80, 0, 0, 0)));
+//        repeatedPostProcessor.apply(new BlurPostprocessor(getContext(), 150));
+//        repeatedPostProcessor.apply(new ColorFilterPostprocessor(Color.argb(80, 0, 0, 0)));
     }
 
     /**
@@ -202,6 +210,7 @@ public class UserFragment extends Fragment {
     private void onClickEdit() {
         FragmentManager fm = getFragmentManager();
         SupportBlurDialogFragment editProfile = new EditProfileDialog();
+        editProfile.setTargetFragment(this, 0);
         editProfile.show(fm, "fragment_edit_profile");
     }
 
