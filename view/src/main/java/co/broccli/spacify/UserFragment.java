@@ -1,7 +1,6 @@
 package co.broccli.spacify;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,13 +22,10 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import co.broccli.logic.Callback;
 import co.broccli.logic.SpacifyApi;
 import co.broccli.logic.model.profile.User;
-import co.broccli.spacify.Helper.FrascoRepeatedPostProcessor;
 import co.broccli.spacify.Profile.EditProfileDialog;
 import co.broccli.spacify.Profile.JoinedSpaces.JoinedSpacesFragmant;
 import co.broccli.spacify.Profile.MySpaces.MySpacesFragment;
 import fr.tvbarthel.lib.blurdialogfragment.SupportBlurDialogFragment;
-import jp.wasabeef.fresco.processors.BlurPostprocessor;
-import jp.wasabeef.fresco.processors.ColorFilterPostprocessor;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 public class UserFragment extends Fragment {
