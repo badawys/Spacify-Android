@@ -25,8 +25,6 @@
     <string name="joined_spaces">Joined Spaces</string>
     <string name="my_spaces">My Spaces</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="edit_profile_title">EDIT PROFILE</string>
     <string name="change_profile_picture">Change Profile Picture</string>
