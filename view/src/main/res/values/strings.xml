@@ -24,4 +24,10 @@
     <string name="oops">Oops!</string>
     <string name="joined_spaces">Joined Spaces</string>
     <string name="my_spaces">My Spaces</string>
+
+    <string name="edit_profile">Edit Profile</string>
+    <string name="edit_profile_title">EDIT PROFILE</string>
+    <string name="change_profile_picture">Change Profile Picture</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
 </resources>

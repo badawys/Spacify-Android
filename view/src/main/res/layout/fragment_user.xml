@@ -9,8 +9,8 @@
     android:tag="fragment_user"
     android:id="@+id/ParentScrollView"
     android:fillViewport="true"
-    android:orientation="vertical"
-    tools:context="co.broccli.spacify.UserFragment">
+    tools:context="co.broccli.spacify.UserFragment"
+    android:orientation="vertical">
     <LinearLayout
             android:id="@+id/profile_header"
             android:layout_width="match_parent"
@@ -28,7 +28,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
-                    fresco:placeholderImage="@color/base" />
+                    fresco:placeholderImage="@color/base"
+                    fresco:overlayImage="@color/black_overlay"/>
 
 
                 <LinearLayout
@@ -46,14 +47,13 @@
                         android:layout_height="110dp"
                         android:layout_gravity="center_vertical"
                         fresco:roundedCornerRadius="110dp"
-                        fresco:placeholderImage="@color/iron"
-                        tools:background="@color/colorPrimary"/>
+                        fresco:placeholderImage="@color/iron" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_gravity="center_vertical">
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/userName"
@@ -82,6 +82,7 @@
                                 android:padding="3dp"
                                 fancy:fb_radius= "35dp"
                                 fancy:fb_defaultColor="@color/colorPrimary"
+                                fancy:fb_focusColor="@color/colorPrimaryDark"
                                 fancy:fb_iconResource="@drawable/ic_icon_edit" />
 
                             <mehdi.sakout.fancybuttons.FancyButton
@@ -92,6 +93,7 @@
                                 android:padding="3dp"
                                 fancy:fb_radius= "35dp"
                                 fancy:fb_defaultColor="@color/colorPrimary"
+                                fancy:fb_focusColor="@color/colorPrimaryDark"
                                 fancy:fb_iconResource="@drawable/ic_icon_settings" />
 
                             <mehdi.sakout.fancybuttons.FancyButton
@@ -102,6 +104,7 @@
                                 android:padding="3dp"
                                 fancy:fb_radius= "35dp"
                                 fancy:fb_defaultColor="@color/colorPrimary"
+                                fancy:fb_focusColor="@color/colorPrimaryDark"
                                 fancy:fb_iconResource="@drawable/ic_icon_logout"/>
                         </LinearLayout>
                     </LinearLayout>
