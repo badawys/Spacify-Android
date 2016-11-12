@@ -28,7 +28,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
-                    fresco:placeholderImage="@color/base" />
+                    fresco:placeholderImage="@color/base"
+                    fresco:overlayImage="@color/black_overlay"/>
 
 
                 <LinearLayout
@@ -46,8 +47,7 @@
                         android:layout_height="110dp"
                         android:layout_gravity="center_vertical"
                         fresco:roundedCornerRadius="110dp"
-                        fresco:placeholderImage="@color/iron"
-                        android:transitionName="ProfilePhoto"/>
+                        fresco:placeholderImage="@color/iron" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
