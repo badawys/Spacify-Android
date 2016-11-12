@@ -14,6 +14,7 @@ android {
         versionCode 4
         renderscriptTargetApi 25
         renderscriptSupportModeEnabled true
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -53,18 +54,18 @@ dependencies {
     compile 'com.github.medyo:fancybuttons:1.8.2'
     compile 'com.github.ksoichiro:android-observablescrollview:1.6.0'
     compile 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
-    compile 'jp.wasabeef:fresco-processors:2.0.0'
     compile 'com.mikepenz:fastadapter-extensions:2.0.0@aar'
     compile 'com.mikepenz:materialize:1.0.0@aar'
-    testCompile 'junit:junit:4.12'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    apt 'com.jakewharton:butterknife-compiler:8.4.0'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     compile 'fr.tvbarthel.blurdialogfragment:lib:2.2.0'
     compile 'com.github.florent37:materialtextfield:1.0.5'
     compile 'com.victor:lib:1.0.4'
     compile 'com.yalantis:ucrop:2.2.0-native'
     compile 'com.github.jkwiecien:EasyImage:1.4.0'
     compile 'com.github.tajchert:nammu:1.1.1'
+    compile 'com.android.support:support-vector-drawable:25.0.0'
+    testCompile 'junit:junit:4.12'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 }
