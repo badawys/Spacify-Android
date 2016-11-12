@@ -36,7 +36,6 @@ import co.broccli.logic.model.profile.User;
 import co.broccli.spacify.Profile.EditProfileDialog;
 import co.broccli.spacify.Profile.JoinedSpaces.JoinedSpacesFragmant;
 import co.broccli.spacify.Profile.MySpaces.MySpacesFragment;
-import co.broccli.spacify.Settings.SettingsActivity;
 import fr.tvbarthel.lib.blurdialogfragment.SupportBlurDialogFragment;
 import mehdi.sakout.fancybuttons.FancyButton;
 
