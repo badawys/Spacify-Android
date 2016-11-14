@@ -28,11 +28,12 @@ import com.victor.loading.rotate.RotateLoading;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider;
+import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesWithFallbackProvider;
 
 
 public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnLocationUpdatedListener{
 
-    private LocationGooglePlayServicesProvider provider;
+    private LocationGooglePlayServicesWithFallbackProvider provider;
     private GoogleMap mMap;
     private static final int LOCATION_PERMISSION_ID = 1001;
     private Circle mapCircle;
@@ -75,8 +76,7 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
     }
 
     private void startLocation() {
-        provider = new LocationGooglePlayServicesProvider();
-        provider.setCheckLocationSettings(true);
+        provider = new LocationGooglePlayServicesWithFallbackProvider(getContext());
 
         SmartLocation smartLocation = new SmartLocation.Builder(getContext()).logging(true).build();
         smartLocation.location(provider).start(this);
