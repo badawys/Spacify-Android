@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnTabReselectListener;
 import com.roughike.bottombar.OnTabSelectListener;
 import co.broccli.logic.SpacifyApi;
 import co.broccli.spacify.Nearby.NearbyFragment;
@@ -101,6 +102,13 @@ public class StartActivity extends AppCompatActivity
                     }
                     active = profileFragment;
                 }
+            }
+        });
+
+        bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
+            @Override
+            public void onTabReSelected(@IdRes int tabId) {
+                fm.beginTransaction().detach(active).attach(active).commit();
             }
         });
     }

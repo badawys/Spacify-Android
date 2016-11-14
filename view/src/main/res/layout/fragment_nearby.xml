@@ -13,15 +13,22 @@
         android:layout_width="match_parent"
         android:layout_height="200dp">
 
-        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:map="http://schemas.android.com/apk/res-auto"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:id="@+id/map"
+        <!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"-->
+            <!--xmlns:map="http://schemas.android.com/apk/res-auto"-->
+            <!--android:name="com.google.android.gms.maps.SupportMapFragment"-->
+            <!--android:id="@+id/map"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--map:cameraZoom="10"-->
+            <!--map:mapType="normal"-->
+            <!--map:liteMode="true"/>-->
+
+        <LinearLayout
+            android:id="@+id/map_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            map:cameraZoom="10"
-            map:mapType="normal"
-            map:liteMode="true"/>
+            android:orientation="vertical">
+        </LinearLayout>
 
         <com.victor.loading.rotate.RotateLoading
             android:id="@+id/rotateloading"

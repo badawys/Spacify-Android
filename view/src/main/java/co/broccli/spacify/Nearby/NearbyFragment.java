@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Circle;
@@ -38,6 +40,7 @@ import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesWith
 
 public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnLocationUpdatedListener, ObservableScrollViewCallbacks {
 
+    private SupportMapFragment mapFragment;
     private LocationGooglePlayServicesWithFallbackProvider provider;
     private GoogleMap mMap;
     private static final int LOCATION_PERMISSION_ID = 1001;
@@ -72,8 +75,14 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
         mapLayout = (FrameLayout) view.findViewById(R.id.mapLayout);
         nearbyListLayout = (LinearLayout) view.findViewById(R.id.nearby_list_layout);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
-                .findFragmentById(R.id.map);
+        GoogleMapOptions options = new GoogleMapOptions();
+        options.mapType(GoogleMap.MAP_TYPE_NORMAL).liteMode(true).mapToolbarEnabled(false);
+
+        mapFragment = SupportMapFragment.newInstance(options);
+        FragmentTransaction fragmentTransaction =
+                getFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.map_container, mapFragment);
+        fragmentTransaction.commit();
         mapFragment.getMapAsync(this);
 
         defaultNearbyListLayoutParams = (LinearLayout.LayoutParams) nearbyListLayout.getLayoutParams();
@@ -104,6 +113,7 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         // Location permission not granted
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             this.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_ID);
@@ -111,7 +121,16 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
         }
         startLocation();
 
+    }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (mapFragment != null) {
+            getFragmentManager().beginTransaction()
+                    .remove(mapFragment)
+                    .commit();
+        }
     }
 
     private void startLocation() {
@@ -160,12 +179,14 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
 
     @Override
     public void onLocationUpdated(Location location) {
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 14.5f);
-        if (mapCircle != null)
-            mapCircle.remove();
-        mMap.animateCamera(cameraUpdate);
-        mapCircle = mMap.addCircle(circleOptions.center(latLng));
+        if (mMap != null) {
+            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 14.5f);
+            if (mapCircle != null)
+                mapCircle.remove();
+            mMap.animateCamera(cameraUpdate);
+            mapCircle = mMap.addCircle(circleOptions.center(latLng));
+        }
     }
 
     @Override
