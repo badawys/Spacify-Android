@@ -55,12 +55,8 @@ public class StartActivity extends AppCompatActivity
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         assert bottomBar != null;
 
-        fm.beginTransaction().add(R.id.fragment_container, userFragment, "3").commit();
-        fm.beginTransaction().add(R.id.fragment_container, nearbyFragment, "2").commit();
-        fm.beginTransaction().add(R.id.fragment_container, feedFragment, "1").commit();
+        fm.beginTransaction().add(R.id.fragment_container, feedFragment, "fragment_feed").commit();
 
-        fm.beginTransaction().hide(userFragment).commit();
-        fm.beginTransaction().hide(nearbyFragment).commit();
         active = feedFragment;
 
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
@@ -73,12 +69,20 @@ public class StartActivity extends AppCompatActivity
                 }
 
                 if (tabId == R.id.tab_nearby) {
-                    fm.beginTransaction().hide(active).show(nearbyFragment).commit();
+                    if (fm.findFragmentByTag("fragment_nearby") == null) {
+                        fm.beginTransaction().hide(active).add(R.id.fragment_container, nearbyFragment, "fragment_nearby").commit();
+                    } else {
+                        fm.beginTransaction().hide(active).show(nearbyFragment).commit();
+                    }
                     active = nearbyFragment;
                 }
 
                 if (tabId == R.id.tab_user) {
-                    fm.beginTransaction().hide(active).show(userFragment).commit();
+                    if (fm.findFragmentByTag("fragment_user") == null) {
+                        fm.beginTransaction().hide(active).add(R.id.fragment_container, userFragment, "fragment_user").commit();
+                    } else {
+                        fm.beginTransaction().hide(active).show(userFragment).commit();
+                    }
                     active = userFragment;
                 }
             }
