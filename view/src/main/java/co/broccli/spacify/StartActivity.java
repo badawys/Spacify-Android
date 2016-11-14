@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 import co.broccli.logic.SpacifyApi;
+import co.broccli.spacify.Nearby.NearbyFragment;
+import co.broccli.spacify.Profile.ProfileFragment;
 import co.broccli.spacify.Utils.NetworkStateReceiver;
 
 
@@ -31,7 +33,7 @@ public class StartActivity extends AppCompatActivity
 
     final Fragment feedFragment = FeedFragment.newInstance();
     final Fragment nearbyFragment = NearbyFragment.newInstance();
-    final Fragment userFragment = UserFragment.newInstance();
+    final Fragment profileFragment = ProfileFragment.newInstance();
     Fragment active = feedFragment;
     final FragmentManager fm = getSupportFragmentManager();
 
@@ -93,11 +95,11 @@ public class StartActivity extends AppCompatActivity
 
                 if (tabId == R.id.tab_user) {
                     if (fm.findFragmentByTag("fragment_user") == null) {
-                        fm.beginTransaction().hide(active).add(R.id.fragment_container, userFragment, "fragment_user").commit();
+                        fm.beginTransaction().hide(active).add(R.id.fragment_container, profileFragment, "fragment_user").commit();
                     } else {
-                        fm.beginTransaction().hide(active).show(userFragment).commit();
+                        fm.beginTransaction().hide(active).show(profileFragment).commit();
                     }
-                    active = userFragment;
+                    active = profileFragment;
                 }
             }
         });

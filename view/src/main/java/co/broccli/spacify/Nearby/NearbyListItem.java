@@ -1,25 +1,30 @@
-package co.broccli.spacify.Profile.JoinedSpaces;
+package co.broccli.spacify.Nearby;
+
+
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.mikepenz.fastadapter.items.AbstractItem;
+
 import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.broccli.spacify.R;
 
-class JoinedSpacesItem extends AbstractItem<JoinedSpacesItem, JoinedSpacesItem.ViewHolder> {
+public class NearbyListItem extends AbstractItem<NearbyListItem, NearbyListItem.ViewHolder> {
 
     protected String imageURL;
     protected String name;
 
-    public JoinedSpacesItem withImageURL(String imageURL) {
+    public NearbyListItem withImageURL(String imageURL) {
         this.imageURL = imageURL;
         return this;
     }
 
-    JoinedSpacesItem withName(String name) {
+    NearbyListItem withName(String name) {
         this.name = name;
         return this;
     }
@@ -31,12 +36,12 @@ class JoinedSpacesItem extends AbstractItem<JoinedSpacesItem, JoinedSpacesItem.V
 
     @Override
     public int getLayoutRes() {
-        return R.layout.joined_spaces_recyclerview_item;
+        return R.layout.nearby_spaces_recyclerview_item;
     }
 
     //The logic to bind your data to the view
     @Override
-    public void bindView(ViewHolder viewHolder, List payloads) {
+    public void bindView(NearbyListItem.ViewHolder viewHolder, List payloads) {
         //call super so the selection is already handled for you
         super.bindView(viewHolder, payloads);
 
@@ -45,7 +50,7 @@ class JoinedSpacesItem extends AbstractItem<JoinedSpacesItem, JoinedSpacesItem.V
 
     //reset the view here (this is an optional method, but recommended)
     @Override
-    public void unbindView(ViewHolder holder) {
+    public void unbindView(NearbyListItem.ViewHolder holder) {
         super.unbindView(holder);
 
     }
