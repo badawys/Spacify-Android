@@ -1,5 +1,6 @@
 package co.broccli.spacify;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.design.widget.NavigationView;
@@ -12,13 +13,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 import co.broccli.logic.SpacifyApi;
+import co.broccli.spacify.Utils.NetworkStateReceiver;
 
 
 public class StartActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, NetworkStateReceiver.NetworkStateReceiverListener {
+
+    private NetworkStateReceiver networkStateReceiver;
+
+    private LinearLayout no_internet_layout;
 
     final Fragment feedFragment = FeedFragment.newInstance();
     final Fragment nearbyFragment = NearbyFragment.newInstance();
@@ -32,6 +41,11 @@ public class StartActivity extends AppCompatActivity
         setContentView(R.layout.activity_start);
 
         SpacifyApi.auth().needToBeLoggedIn(this);
+
+        networkStateReceiver = new NetworkStateReceiver();
+        this.registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
+
+        no_internet_layout = (LinearLayout) findViewById(R.id.no_internet_layout);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -89,7 +103,23 @@ public class StartActivity extends AppCompatActivity
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        networkStateReceiver.removeListener(this);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        networkStateReceiver.addListener(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        networkStateReceiver.removeListener(this);
+    }
 
     @Override
     public void onBackPressed() {
@@ -147,5 +177,15 @@ public class StartActivity extends AppCompatActivity
 //        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void networkAvailable() {
+        no_internet_layout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void networkUnavailable() {
+        no_internet_layout.setVisibility(View.VISIBLE);
     }
 }
