@@ -3,6 +3,7 @@ package co.broccli.spacify.Nearby;
 
 import android.Manifest;
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -30,9 +31,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.mikepenz.fastadapter.FastAdapter;
+import com.mikepenz.fastadapter.IAdapter;
+import com.mikepenz.fastadapter.IItem;
 import com.mikepenz.fastadapter.adapters.FastItemAdapter;
 import com.victor.loading.rotate.RotateLoading;
 import co.broccli.spacify.R;
+import co.broccli.spacify.Space.SpaceActivity;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesWithFallbackProvider;
@@ -92,6 +97,15 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
         FastItemAdapter fastAdapter = new FastItemAdapter();
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView .setAdapter(fastAdapter);
+        fastAdapter.withOnClickListener(new FastAdapter.OnClickListener() {
+            @Override
+            public boolean onClick(View v, IAdapter adapter, IItem item, int position) {
+                Intent spaceIntent = new Intent(getActivity(), SpaceActivity.class);
+                getActivity().startActivity(spaceIntent);
+                return true;
+            }
+        });
+
         fastAdapter.add(
                 new NearbyListItem().withName("Space1 Name"),
                 new NearbyListItem().withName("Space2 Name"),
