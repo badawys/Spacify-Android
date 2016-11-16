@@ -1,4 +1,4 @@
-package co.broccli.spacify;
+package co.broccli.spacify.Profile;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -33,13 +33,13 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import co.broccli.logic.Callback;
 import co.broccli.logic.SpacifyApi;
 import co.broccli.logic.model.profile.User;
-import co.broccli.spacify.Profile.EditProfileDialog;
 import co.broccli.spacify.Profile.JoinedSpaces.JoinedSpacesFragmant;
 import co.broccli.spacify.Profile.MySpaces.MySpacesFragment;
+import co.broccli.spacify.R;
 import fr.tvbarthel.lib.blurdialogfragment.SupportBlurDialogFragment;
 import mehdi.sakout.fancybuttons.FancyButton;
 
-public class UserFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 
     private TextView userName;
     private SimpleDraweeView profilePhoto;
@@ -51,12 +51,12 @@ public class UserFragment extends Fragment {
     private FancyButton editButton;
 
 
-    public UserFragment() {
+    public ProfileFragment() {
         // Required empty public constructor
     }
 
-    public static UserFragment newInstance() {
-        return new UserFragment();
+    public static ProfileFragment newInstance() {
+        return new ProfileFragment();
     }
 
     @Override
@@ -64,7 +64,7 @@ public class UserFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
-        View view = inflater.inflate(R.layout.fragment_user, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         profilePhoto = (SimpleDraweeView) view.findViewById(R.id.user_pic_view);
         headerBackground = (SimpleDraweeView) view.findViewById(R.id.header_background);

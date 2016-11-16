@@ -10,7 +10,8 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="0dp">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -24,7 +25,7 @@
                 android:contentDescription="@string/app_name"
                 android:layout_height="28dp"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_toolbar_logo"
+                android:src="@drawable/ic_toolbar_logo"
                 android:layout_marginEnd="19dp"
                 android:layout_marginTop="15dp"/>
 

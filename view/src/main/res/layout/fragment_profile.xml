@@ -9,7 +9,7 @@
     android:tag="fragment_user"
     android:id="@+id/ParentScrollView"
     android:fillViewport="true"
-    tools:context="co.broccli.spacify.UserFragment"
+    tools:context="co.broccli.spacify.Profile.ProfileFragment"
     android:orientation="vertical">
     <LinearLayout
             android:id="@+id/profile_header"
@@ -131,7 +131,8 @@
             app:tabTextColor="@color/colorPrimary"
             app:tabSelectedTextColor="@color/white"
             app:tabIndicatorColor="@color/colorPrimary"
-            app:tabIndicatorHeight="0dp" />
+            app:tabIndicatorHeight="0dp"
+            android:layout_marginTop="-3dp"/>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/tab_pager"
