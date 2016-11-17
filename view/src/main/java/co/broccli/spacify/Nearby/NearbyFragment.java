@@ -6,6 +6,7 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -37,7 +38,6 @@ import com.mikepenz.fastadapter.IItem;
 import com.mikepenz.fastadapter.adapters.FastItemAdapter;
 import com.victor.loading.rotate.RotateLoading;
 import co.broccli.spacify.R;
-import co.broccli.spacify.Space.SpaceActivity;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesWithFallbackProvider;
@@ -80,6 +80,24 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
         mapLayout = (FrameLayout) view.findViewById(R.id.mapLayout);
         nearbyListLayout = (LinearLayout) view.findViewById(R.id.nearby_list_layout);
 
+        defaultNearbyListLayoutParams = (LinearLayout.LayoutParams) nearbyListLayout.getLayoutParams();
+        mRecyclerView  = (ObservableRecyclerView) view.findViewById(R.id.nearbyList);
+        mRecyclerView.setScrollViewCallbacks(this);
+        linearLayoutManager = new LinearLayoutManager(getContext());
+
+        return  view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Location permission not granted
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            this.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_ID);
+            return;
+        }
+
         GoogleMapOptions options = new GoogleMapOptions();
         options.mapType(GoogleMap.MAP_TYPE_NORMAL).liteMode(true).mapToolbarEnabled(false);
 
@@ -90,18 +108,21 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
         fragmentTransaction.commit();
         mapFragment.getMapAsync(this);
 
-        defaultNearbyListLayoutParams = (LinearLayout.LayoutParams) nearbyListLayout.getLayoutParams();
-        mRecyclerView  = (ObservableRecyclerView) view.findViewById(R.id.nearbyList);
-        mRecyclerView .setScrollViewCallbacks(this);
-        linearLayoutManager = new LinearLayoutManager(getContext());
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                startLocation();
+            }
+        });
+
         FastItemAdapter fastAdapter = new FastItemAdapter();
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView .setAdapter(fastAdapter);
         fastAdapter.withOnClickListener(new FastAdapter.OnClickListener() {
             @Override
             public boolean onClick(View v, IAdapter adapter, IItem item, int position) {
-                Intent spaceIntent = new Intent(getActivity(), SpaceActivity.class);
-                getActivity().startActivity(spaceIntent);
+//                        Intent spaceIntent = new Intent(getActivity(), SpaceActivity.class);
+//                        getActivity().startActivity(spaceIntent);
                 return true;
             }
         });
@@ -120,21 +141,6 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
                 new NearbyListItem().withName("Space11 Name"),
                 new NearbyListItem().withName("Space12 Name"),
                 new NearbyListItem().withName("Space13 Name"));
-
-        return  view;
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        // Location permission not granted
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            this.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_ID);
-            return;
-        }
-        startLocation();
-
     }
 
     @Override

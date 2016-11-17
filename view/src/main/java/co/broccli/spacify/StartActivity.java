@@ -72,6 +72,8 @@ public class StartActivity extends AppCompatActivity
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         assert bottomBar != null;
 
+        fm.beginTransaction().add(R.id.fragment_container, nearbyFragment, "fragment_nearby").hide(nearbyFragment).commit();
+        fm.beginTransaction().add(R.id.fragment_container, profileFragment, "fragment_user").hide(profileFragment).commit();
         fm.beginTransaction().add(R.id.fragment_container, feedFragment, "fragment_feed").commit();
 
         active = feedFragment;
@@ -80,26 +82,17 @@ public class StartActivity extends AppCompatActivity
             @Override
             public void onTabSelected(@IdRes int tabId) {
                 if (tabId == R.id.tab_feed) {
-                    if(active != feedFragment)
-                        fm.beginTransaction().hide(active).show(feedFragment).commit();
+                    fm.beginTransaction().hide(active).show(feedFragment).commit();
                     active = feedFragment;
                 }
 
                 if (tabId == R.id.tab_nearby) {
-                    if (fm.findFragmentByTag("fragment_nearby") == null) {
-                        fm.beginTransaction().hide(active).add(R.id.fragment_container, nearbyFragment, "fragment_nearby").commit();
-                    } else {
-                        fm.beginTransaction().hide(active).show(nearbyFragment).commit();
-                    }
+                    fm.beginTransaction().hide(active).show(nearbyFragment).commit();
                     active = nearbyFragment;
                 }
 
                 if (tabId == R.id.tab_user) {
-                    if (fm.findFragmentByTag("fragment_user") == null) {
-                        fm.beginTransaction().hide(active).add(R.id.fragment_container, profileFragment, "fragment_user").commit();
-                    } else {
-                        fm.beginTransaction().hide(active).show(profileFragment).commit();
-                    }
+                    fm.beginTransaction().hide(active).show(profileFragment).commit();
                     active = profileFragment;
                 }
             }
