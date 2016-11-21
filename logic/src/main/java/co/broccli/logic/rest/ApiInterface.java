@@ -8,6 +8,7 @@ import co.broccli.logic.model.profile.User;
 import co.broccli.logic.model.signup.Signup;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -32,6 +33,14 @@ public interface ApiInterface {
      */
     @POST("oauth/token")
     Call<OAuth2AccessToken> getAccessTokenData(@Body AccessTokenRequest accessTokenRequest);
+
+    /**
+     *  Firebase JWT call
+     *
+     * @return Firebase JWT
+     */
+    @GET("firebase/auth")
+    Call<ResponseBody> getFirebaseJWT ();
 
     /**
      *  Logout call

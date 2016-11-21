@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "94942344127",
+    "firebase_url": "https://spacify-1479074985562.firebaseio.com",
+    "project_id": "spacify-1479074985562",
+    "storage_bucket": "spacify-1479074985562.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:94942344127:android:b47b1b7a9953f209",
+        "android_client_info": {
+          "package_name": "co.broccli.spacify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "94942344127-pokd813f61ok6reaq4hco02rmiakfbg6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.broccli.spacify",
+            "certificate_hash": "05757C58D0A48D7FEA37B24E80BB76B1706D31D1"
+          }
+        },
+        {
+          "client_id": "94942344127-454qhi950uf0nbq28fumtiuurd2dsph3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyActyRjbrFCfUknesrtjz8rtwNsw7ouRWU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "94942344127-454qhi950uf0nbq28fumtiuurd2dsph3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
