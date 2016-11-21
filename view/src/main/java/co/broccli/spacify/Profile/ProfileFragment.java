@@ -28,6 +28,9 @@ import com.facebook.imagepipeline.request.BasePostprocessor;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.facebook.imagepipeline.request.Postprocessor;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import co.broccli.logic.Callback;
@@ -40,6 +43,9 @@ import fr.tvbarthel.lib.blurdialogfragment.SupportBlurDialogFragment;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 public class ProfileFragment extends Fragment {
+
+    FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
 
     private TextView userName;
     private SimpleDraweeView profilePhoto;
@@ -81,6 +87,8 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
 
         setProfileTabs ();
         getProfileData ();
@@ -123,6 +131,19 @@ public class ProfileFragment extends Fragment {
             public void onResult(User user) {
                 setUsername(user.getName());
                 setProfilePhoto (user.getPhoto());
+                if (firebaseUser != null ){
+                    if (firebaseUser.getEmail() != user.getEmail())
+                        firebaseUser.updateEmail(user.getEmail());
+                    if (firebaseUser.getDisplayName() != user.getName() ||
+                            firebaseUser.getPhotoUrl() != Uri.parse("http://spacify.s3.amazonaws.com/" + user.getPhoto())) {
+                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(user.getName())
+                                .setPhotoUri(Uri.parse("http://spacify.s3.amazonaws.com/" + user.getPhoto()))
+                                .build();
+                        firebaseUser.updateProfile(profileUpdates);
+                    }
+
+                }
             }
 
             @Override
@@ -249,6 +270,7 @@ public class ProfileFragment extends Fragment {
      * ToDo: Add Description
      */
     private void onClickLogout () {
+        firebaseAuth.signOut();
         SpacifyApi.auth().logout(getContext());
     }
 
