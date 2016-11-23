@@ -39,6 +39,7 @@ import co.broccli.logic.model.profile.User;
 import co.broccli.spacify.Profile.JoinedSpaces.JoinedSpacesFragmant;
 import co.broccli.spacify.Profile.MySpaces.MySpacesFragment;
 import co.broccli.spacify.R;
+import co.broccli.spacify.Settings.SettingsActivity;
 import fr.tvbarthel.lib.blurdialogfragment.SupportBlurDialogFragment;
 import mehdi.sakout.fancybuttons.FancyButton;
 
@@ -52,7 +53,6 @@ public class ProfileFragment extends Fragment {
     private SimpleDraweeView headerBackground;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private FancyButton logoutButton;
     private FancyButton settingsButton;
     private FancyButton editButton;
 
@@ -77,7 +77,6 @@ public class ProfileFragment extends Fragment {
         userName = (TextView) view.findViewById(R.id.userName);
         tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
         viewPager = (ViewPager) view.findViewById(R.id.tab_pager);
-        logoutButton = (FancyButton) view.findViewById(R.id.logoutButton);
         settingsButton = (FancyButton) view.findViewById(R.id.settingsButton);
         editButton = (FancyButton) view.findViewById(R.id.editButton);
 
@@ -92,13 +91,6 @@ public class ProfileFragment extends Fragment {
 
         setProfileTabs ();
         getProfileData ();
-
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickLogout();
-            }
-        });
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -266,13 +258,6 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    /**
-     * ToDo: Add Description
-     */
-    private void onClickLogout () {
-        firebaseAuth.signOut();
-        SpacifyApi.auth().logout(getContext());
-    }
 
     /**
      * ToDo: Add Description
@@ -288,8 +273,8 @@ public class ProfileFragment extends Fragment {
      * ToDo: Add Description
      */
     private void onClickSettings() {
-//        Intent settingsIntent = new Intent(getActivity(), SettingsActivity.class);
-//        getActivity().startActivity(settingsIntent);
+        Intent settingsIntent = new Intent(getActivity(), SettingsActivity.class);
+        getActivity().startActivity(settingsIntent);
     }
 
 }
