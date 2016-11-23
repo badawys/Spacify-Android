@@ -67,6 +67,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-location:9.8.0'
     compile 'com.google.firebase:firebase-core:9.8.0'
     compile 'com.google.firebase:firebase-auth:9.8.0'
+    compile 'com.fnp:material-preferences:0.1.4'
     testCompile 'junit:junit:4.12'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'

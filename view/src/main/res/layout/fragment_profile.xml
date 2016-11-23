@@ -35,7 +35,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:paddingStart="20dp"
                     android:paddingEnd="16dp"
                     android:paddingTop="10dp"
@@ -43,17 +43,18 @@
 
                     <com.facebook.drawee.view.SimpleDraweeView
                         android:id="@+id/user_pic_view"
-                        android:layout_width="110dp"
-                        android:layout_height="110dp"
-                        android:layout_gravity="center_vertical"
-                        fresco:roundedCornerRadius="110dp"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_gravity="center_horizontal"
+                        fresco:roundedCornerRadius="90dp"
                         fresco:placeholderImage="@color/iron" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginTop="8dp">
 
                         <TextView
                             android:id="@+id/userName"
@@ -73,7 +74,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:gravity="center_horizontal"
-                            android:layout_marginTop="16dp">
+                            android:layout_marginTop="8dp">
 
                             <mehdi.sakout.fancybuttons.FancyButton
                                 android:id="@+id/editButton"
@@ -95,17 +96,6 @@
                                 fancy:fb_defaultColor="@color/colorPrimary"
                                 fancy:fb_focusColor="@color/colorPrimaryDark"
                                 fancy:fb_iconResource="@drawable/ic_icon_settings" />
-
-                            <mehdi.sakout.fancybuttons.FancyButton
-                                android:id="@+id/logoutButton"
-                                android:layout_width="35dp"
-                                android:layout_height="35dp"
-                                android:layout_marginStart="16dp"
-                                android:padding="3dp"
-                                fancy:fb_radius= "35dp"
-                                fancy:fb_defaultColor="@color/colorPrimary"
-                                fancy:fb_focusColor="@color/colorPrimaryDark"
-                                fancy:fb_iconResource="@drawable/ic_icon_logout"/>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
