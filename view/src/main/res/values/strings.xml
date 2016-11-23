@@ -30,9 +30,9 @@
     <string name="change_profile_picture">Change Profile Picture</string>
     <string name="name">Name</string>
     <string name="email">Email</string>
-    <string name="nearby_places">Nearby Places</string>
+    <string name="nearby_places">Nearby Spaces</string>
     <string name="title_activity_space">Space Name</string>
-    <string name="med_text">
+    <string name="med_text" translatable="false">
         "A material metaphor is the unifying theory of a rationalized space and a system of motion."
         "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
         "technologically advanced and open to imagination and magic."

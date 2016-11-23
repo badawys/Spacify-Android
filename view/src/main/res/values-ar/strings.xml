@@ -28,7 +28,7 @@
     <string name="change_profile_picture">تغيير صورة الحساب الشخصي</string>
     <string name="name">الإسم</string>
     <string name="email">البريد الإلكتروني</string>
-    <string name="nearby_places">Nearby Places</string>
-
-
+    <string name="nearby_places">المساحات المجاورة</string>
+    <string name="title_activity_settings">الإعدادات</string>
+    <string name="title_activity_space">إسم المساحة</string>
 </resources>
