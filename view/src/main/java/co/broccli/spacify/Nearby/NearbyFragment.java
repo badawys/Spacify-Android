@@ -1,12 +1,10 @@
 package co.broccli.spacify.Nearby;
 
-
 import android.Manifest;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
@@ -38,25 +35,22 @@ import com.mikepenz.fastadapter.IItem;
 import com.mikepenz.fastadapter.adapters.FastItemAdapter;
 import com.victor.loading.rotate.RotateLoading;
 import co.broccli.spacify.R;
+import co.broccli.spacify.Space.SpaceActivity;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesWithFallbackProvider;
 
-
 public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnLocationUpdatedListener, ObservableScrollViewCallbacks {
 
     private SupportMapFragment mapFragment;
-    private LocationGooglePlayServicesWithFallbackProvider provider;
     private GoogleMap mMap;
     private static final int LOCATION_PERMISSION_ID = 1001;
     private Circle mapCircle;
     private CircleOptions circleOptions;
-
     private FrameLayout mapLayout;
     private LinearLayout nearbyListLayout;
     private RotateLoading rotateLoading;
-    ObservableRecyclerView mRecyclerView ;
-
+    private ObservableRecyclerView mRecyclerView ;
     private LinearLayout.LayoutParams defaultNearbyListLayoutParams;
     private boolean mapLayoutIsExtended = false;
     private LinearLayoutManager linearLayoutManager;
@@ -69,10 +63,8 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
         return new NearbyFragment();
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_nearby, container, false);
 
@@ -108,12 +100,7 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
         fragmentTransaction.commit();
         mapFragment.getMapAsync(this);
 
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                startLocation();
-            }
-        });
+        startLocation();
 
         FastItemAdapter fastAdapter = new FastItemAdapter();
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -121,8 +108,8 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
         fastAdapter.withOnClickListener(new FastAdapter.OnClickListener() {
             @Override
             public boolean onClick(View v, IAdapter adapter, IItem item, int position) {
-//                        Intent spaceIntent = new Intent(getActivity(), SpaceActivity.class);
-//                        getActivity().startActivity(spaceIntent);
+                        Intent spaceIntent = new Intent(getActivity(), SpaceActivity.class);
+                        getActivity().startActivity(spaceIntent);
                 return true;
             }
         });
@@ -154,7 +141,7 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
     }
 
     private void startLocation() {
-        provider = new LocationGooglePlayServicesWithFallbackProvider(getContext());
+        LocationGooglePlayServicesWithFallbackProvider provider = new LocationGooglePlayServicesWithFallbackProvider(getContext());
 
         SmartLocation smartLocation = new SmartLocation.Builder(getContext()).logging(true).build();
         smartLocation.location(provider).start(this);

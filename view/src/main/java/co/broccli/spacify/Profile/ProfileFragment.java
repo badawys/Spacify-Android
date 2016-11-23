@@ -28,6 +28,9 @@ import com.facebook.imagepipeline.request.BasePostprocessor;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.facebook.imagepipeline.request.Postprocessor;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 import co.broccli.logic.Callback;
@@ -36,17 +39,20 @@ import co.broccli.logic.model.profile.User;
 import co.broccli.spacify.Profile.JoinedSpaces.JoinedSpacesFragmant;
 import co.broccli.spacify.Profile.MySpaces.MySpacesFragment;
 import co.broccli.spacify.R;
+import co.broccli.spacify.Settings.SettingsActivity;
 import fr.tvbarthel.lib.blurdialogfragment.SupportBlurDialogFragment;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 public class ProfileFragment extends Fragment {
+
+    FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
 
     private TextView userName;
     private SimpleDraweeView profilePhoto;
     private SimpleDraweeView headerBackground;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private FancyButton logoutButton;
     private FancyButton settingsButton;
     private FancyButton editButton;
 
@@ -71,7 +77,6 @@ public class ProfileFragment extends Fragment {
         userName = (TextView) view.findViewById(R.id.userName);
         tabLayout = (TabLayout) view.findViewById(R.id.tab_layout);
         viewPager = (ViewPager) view.findViewById(R.id.tab_pager);
-        logoutButton = (FancyButton) view.findViewById(R.id.logoutButton);
         settingsButton = (FancyButton) view.findViewById(R.id.settingsButton);
         editButton = (FancyButton) view.findViewById(R.id.editButton);
 
@@ -81,16 +86,11 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
 
         setProfileTabs ();
         getProfileData ();
-
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickLogout();
-            }
-        });
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +123,19 @@ public class ProfileFragment extends Fragment {
             public void onResult(User user) {
                 setUsername(user.getName());
                 setProfilePhoto (user.getPhoto());
+                if (firebaseUser != null ){
+                    if (firebaseUser.getEmail() != user.getEmail())
+                        firebaseUser.updateEmail(user.getEmail());
+                    if (firebaseUser.getDisplayName() != user.getName() ||
+                            firebaseUser.getPhotoUrl() != Uri.parse("http://spacify.s3.amazonaws.com/" + user.getPhoto())) {
+                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                .setDisplayName(user.getName())
+                                .setPhotoUri(Uri.parse("http://spacify.s3.amazonaws.com/" + user.getPhoto()))
+                                .build();
+                        firebaseUser.updateProfile(profileUpdates);
+                    }
+
+                }
             }
 
             @Override
@@ -245,12 +258,6 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    /**
-     * ToDo: Add Description
-     */
-    private void onClickLogout () {
-        SpacifyApi.auth().logout(getContext());
-    }
 
     /**
      * ToDo: Add Description
@@ -266,8 +273,8 @@ public class ProfileFragment extends Fragment {
      * ToDo: Add Description
      */
     private void onClickSettings() {
-//        Intent settingsIntent = new Intent(getActivity(), SettingsActivity.class);
-//        getActivity().startActivity(settingsIntent);
+        Intent settingsIntent = new Intent(getActivity(), SettingsActivity.class);
+        getActivity().startActivity(settingsIntent);
     }
 
 }

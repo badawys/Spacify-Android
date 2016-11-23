@@ -40,12 +40,12 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Dark.NoActionBar"></activity>
+            android:theme="@style/AppTheme.Dark.NoActionBar" />
         <activity
             android:name=".SignupActivity"
             android:label="@string/title_activity_signup"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Dark.NoActionBar"></activity>
+            android:theme="@style/AppTheme.Dark.NoActionBar" />
 
         <!--
 ATTENTION: This was auto-generated to add Google Play services to your project for
@@ -65,7 +65,12 @@ ATTENTION: This was auto-generated to add Google Play services to your project f
         <activity
             android:name=".Space.SpaceActivity"
             android:label="@string/title_activity_space"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Settings.SettingsActivity"
+            android:label="@string/title_activity_settings">
+
+        </activity>
     </application>
 
 </manifest>

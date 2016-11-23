@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
-import co.broccli.logic.SessionManager;
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import co.broccli.logic.SpacifyApi;
 
 public class SplashScreen extends AppCompatActivity {
@@ -19,6 +19,7 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                FirebaseAnalytics.getInstance(SplashScreen.this);
                 // Check user login (this is the important point)
                 // If User is not logged in , This will redirect user to LoginActivity
                 // and finish current activity from activity stack.
