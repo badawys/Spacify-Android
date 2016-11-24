@@ -10,8 +10,8 @@ android {
         applicationId 'co.broccli.spacify'
         minSdkVersion 19
         targetSdkVersion 25
-        versionName 'Alpha-2.7'
-        versionCode 6
+        versionName 'Alpha-3.0'
+        versionCode 7
         renderscriptTargetApi 25
         renderscriptSupportModeEnabled true
         multiDexEnabled true
