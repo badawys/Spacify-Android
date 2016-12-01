@@ -36,13 +36,13 @@ public class SettingsActivity extends com.fnp.materialpreferences.PreferenceActi
                 }
             });
 
-            Preference changePassword = findPreference("change_password");
-            changePassword.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object o) {
-                    return false;
-                }
-            });
+//            Preference changePassword = findPreference("change_password");
+//            changePassword.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+//                @Override
+//                public boolean onPreferenceChange(Preference preference, Object o) {
+//                    return false;
+//                }
+//            });
         }
     }
 }
