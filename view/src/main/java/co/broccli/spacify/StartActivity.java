@@ -45,9 +45,6 @@ public class StartActivity extends AppCompatActivity
 
         SpacifyApi.auth().needToBeLoggedIn(this);
 
-        networkStateReceiver = new NetworkStateReceiver();
-        this.registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
-
         no_internet_layout = (LinearLayout) findViewById(R.id.no_internet_layout);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -110,19 +107,17 @@ public class StartActivity extends AppCompatActivity
     protected void onPause() {
         super.onPause();
         networkStateReceiver.removeListener(this);
+        this.unregisterReceiver(networkStateReceiver);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        networkStateReceiver = new NetworkStateReceiver();
+        this.registerReceiver(networkStateReceiver, new IntentFilter(android.net.ConnectivityManager.CONNECTIVITY_ACTION));
         networkStateReceiver.addListener(this);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        networkStateReceiver.removeListener(this);
-    }
 
     @Override
     public void onBackPressed() {

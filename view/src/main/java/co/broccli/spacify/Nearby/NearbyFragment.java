@@ -95,7 +95,7 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
 
         mapFragment = SupportMapFragment.newInstance(options);
         FragmentTransaction fragmentTransaction =
-                getFragmentManager().beginTransaction();
+                getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.map_container, mapFragment);
         fragmentTransaction.commit();
         mapFragment.getMapAsync(this);
@@ -130,15 +130,6 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
                 new NearbyListItem().withName("Space13 Name"));
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        if (mapFragment != null) {
-            getFragmentManager().beginTransaction()
-                    .remove(mapFragment)
-                    .commit();
-        }
-    }
 
     private void startLocation() {
         LocationGooglePlayServicesWithFallbackProvider provider = new LocationGooglePlayServicesWithFallbackProvider(getContext());
