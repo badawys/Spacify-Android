@@ -13,16 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="200dp">
 
-        <!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"-->
-            <!--xmlns:map="http://schemas.android.com/apk/res-auto"-->
-            <!--android:name="com.google.android.gms.maps.SupportMapFragment"-->
-            <!--android:id="@+id/map"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--map:cameraZoom="10"-->
-            <!--map:mapType="normal"-->
-            <!--map:liteMode="true"/>-->
-
         <LinearLayout
             android:id="@+id/map_container"
             android:layout_width="match_parent"
@@ -49,26 +39,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:orientation="horizontal"
-            android:padding="16dp">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/nearby_places"
                 android:textSize="18sp"
+                android:padding="16dp"
                 android:textColor="@color/white"
                 android:layout_alignParentStart="true"/>
 
             <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/searchButton"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                fancy:fb_radius= "25dp"
+                android:id="@+id/addButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                fancy:fb_radius= "40dp"
                 fancy:fb_defaultColor="@color/colorPrimary"
                 fancy:fb_focusColor="@color/colorPrimaryDark"
-                fancy:fb_fontIconResource="&#xf002;"
-                android:layout_alignParentEnd="true"/>
+                fancy:fb_iconResource="@drawable/ic_toolbar_add"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp"/>
         </RelativeLayout>
 
         <com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView

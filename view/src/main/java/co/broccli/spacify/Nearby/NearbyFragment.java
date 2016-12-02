@@ -38,10 +38,12 @@ import co.broccli.spacify.R;
 import co.broccli.spacify.Space.SpaceActivity;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
-import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesWithFallbackProvider;
+import io.nlopez.smartlocation.location.config.LocationParams;
+import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider;
 
 public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnLocationUpdatedListener, ObservableScrollViewCallbacks {
 
+    SmartLocation smartLocation;
     private SupportMapFragment mapFragment;
     private GoogleMap mMap;
     private static final int LOCATION_PERMISSION_ID = 1001;
@@ -95,12 +97,10 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
 
         mapFragment = SupportMapFragment.newInstance(options);
         FragmentTransaction fragmentTransaction =
-                getFragmentManager().beginTransaction();
+                getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.map_container, mapFragment);
         fragmentTransaction.commit();
         mapFragment.getMapAsync(this);
-
-        startLocation();
 
         FastItemAdapter fastAdapter = new FastItemAdapter();
         mRecyclerView.setLayoutManager(linearLayoutManager);
@@ -130,27 +130,17 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
                 new NearbyListItem().withName("Space13 Name"));
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        if (mapFragment != null) {
-            getFragmentManager().beginTransaction()
-                    .remove(mapFragment)
-                    .commit();
-        }
-    }
 
     private void startLocation() {
-        LocationGooglePlayServicesWithFallbackProvider provider = new LocationGooglePlayServicesWithFallbackProvider(getContext());
 
-        SmartLocation smartLocation = new SmartLocation.Builder(getContext()).logging(true).build();
-        smartLocation.location(provider).start(this);
+        LocationGooglePlayServicesProvider provider = new LocationGooglePlayServicesProvider();
+        provider.setCheckLocationSettings(true);
+        smartLocation = new SmartLocation.Builder(getContext()).logging(true).build();
+        smartLocation.location(provider).config(LocationParams.NAVIGATION).start(this);
+    }
 
-        circleOptions = new CircleOptions()
-                .radius(500)
-                .fillColor(0x551976D2)
-                .strokeColor(0x551976D2)
-                .strokeWidth(0);
+    private void stopLocation () {
+        smartLocation.location().stop();
     }
 
     @Override
@@ -170,6 +160,13 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
 
             }
         });
+
+        circleOptions = new CircleOptions()
+                .radius(500)
+                .fillColor(0x551976D2)
+                .strokeColor(0x551976D2)
+                .strokeWidth(0);
+
         rotateLoading.start();
         mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
             @Override
@@ -250,5 +247,17 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
 
     private int getContainerHeight() {
         return (getActivity().findViewById(R.id.fragment_container)).getHeight();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        startLocation();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopLocation();
     }
 }
