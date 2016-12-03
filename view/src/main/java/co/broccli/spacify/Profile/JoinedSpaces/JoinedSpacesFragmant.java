@@ -1,5 +1,6 @@
 package co.broccli.spacify.Profile.JoinedSpaces;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -7,9 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
+import com.mikepenz.fastadapter.FastAdapter;
+import com.mikepenz.fastadapter.IAdapter;
+import com.mikepenz.fastadapter.IItem;
 import com.mikepenz.fastadapter.adapters.FastItemAdapter;
 import co.broccli.spacify.Profile.ProfileTabFragmentBase;
 import co.broccli.spacify.R;
+import co.broccli.spacify.Space.SpaceActivity;
 
 
 public class JoinedSpacesFragmant extends ProfileTabFragmentBase {
@@ -41,6 +46,14 @@ public class JoinedSpacesFragmant extends ProfileTabFragmentBase {
                 new JoinedSpacesItem().withName("Space11 Name"),
                 new JoinedSpacesItem().withName("Space12 Name"),
                 new JoinedSpacesItem().withName("Space13 Name"));
+        fastAdapter.withOnClickListener(new FastAdapter.OnClickListener() {
+            @Override
+            public boolean onClick(View v, IAdapter adapter, IItem item, int position) {
+                Intent spaceIntent = new Intent(getActivity(), SpaceActivity.class);
+                getActivity().startActivity(spaceIntent);
+                return true;
+            }
+        });
 
         return view;
     }
