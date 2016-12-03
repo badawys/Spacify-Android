@@ -74,13 +74,15 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:gravity="center_horizontal"
-                            android:layout_marginTop="8dp">
+                            android:layout_marginTop="8dp"
+                            android:paddingStart="50dp"
+                            android:paddingEnd="50dp">
 
                             <mehdi.sakout.fancybuttons.FancyButton
                                 android:id="@+id/settingsButton"
                                 android:layout_width="0dp"
                                 android:layout_height="35dp"
-                                android:layout_marginEnd="5dp"
+                                android:layout_marginEnd="8dp"
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="20dp"
                                 android:paddingRight="20dp"
@@ -94,7 +96,7 @@
                                 android:id="@+id/editButton"
                                 android:layout_width="0dp"
                                 android:layout_height="35dp"
-                                android:layout_marginStart="5dp"
+                                android:layout_marginStart="8dp"
                                 android:paddingBottom="10dp"
                                 android:paddingLeft="20dp"
                                 android:paddingRight="20dp"

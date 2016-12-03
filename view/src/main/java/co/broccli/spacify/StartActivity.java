@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import co.broccli.logic.SpacifyApi;
+import co.broccli.spacify.Feed.FeedFragment;
 import co.broccli.spacify.Nearby.NearbyFragment;
 import co.broccli.spacify.Profile.ProfileFragment;
 import co.broccli.spacify.Utils.NetworkStateReceiver;
