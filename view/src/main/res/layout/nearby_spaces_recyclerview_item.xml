@@ -35,7 +35,9 @@
         fancy:fb_defaultColor="@color/primary"
         fancy:fb_focusColor="@color/primary_dark"
         fancy:fb_textSize="12sp"
-        fancy:fb_text="JOIN"
+        fancy:fb_text="@string/join_button"
+        fancy:fb_fontIconResource="&#xf00c;"
+        fancy:fb_iconPosition="left"
         fancy:fb_textColor="#FFFFFF"/>
 
     <TextView
@@ -44,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/space_photo"
         android:layout_toStartOf="@id/space_joined_button"
-        tools:text="Space Name"
+        tools:text="@string/space_name"
         android:textSize="15sp"
         android:padding="16dp"
         android:gravity="center_vertical"
