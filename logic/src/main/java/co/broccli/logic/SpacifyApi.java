@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.anupcowkur.reservoir.Reservoir;
+import com.facebook.stetho.Stetho;
 
 public class SpacifyApi {
 
@@ -39,6 +40,7 @@ public class SpacifyApi {
             mInstance = new SpacifyApi();
             mInstance.initializeSessionManager(context);
             Offline.init(context);
+            Stetho.initializeWithDefaults(context);
         } else {
             Log.w(
                     TAG,

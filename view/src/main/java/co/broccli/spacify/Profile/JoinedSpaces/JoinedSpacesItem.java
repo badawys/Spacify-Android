@@ -9,7 +9,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.broccli.spacify.R;
 
-public class JoinedSpacesItem extends AbstractItem<JoinedSpacesItem, JoinedSpacesItem.ViewHolder> {
+class JoinedSpacesItem extends AbstractItem<JoinedSpacesItem, JoinedSpacesItem.ViewHolder> {
 
     protected String imageURL;
     protected String name;
@@ -19,7 +19,7 @@ public class JoinedSpacesItem extends AbstractItem<JoinedSpacesItem, JoinedSpace
         return this;
     }
 
-    public JoinedSpacesItem withName(String name) {
+    JoinedSpacesItem withName(String name) {
         this.name = name;
         return this;
     }
@@ -52,15 +52,15 @@ public class JoinedSpacesItem extends AbstractItem<JoinedSpacesItem, JoinedSpace
 
 
     //The viewHolder used for this item. This viewHolder is always reused by the RecyclerView so scrolling is blazing fast
-    protected static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         protected View view;
 
         @BindView(R.id.space_photo)
-        protected SimpleDraweeView spacePhoto;
+        SimpleDraweeView spacePhoto;
 
         @BindView(R.id.space_name)
-        protected TextView spaceName;
+        TextView spaceName;
 
         public ViewHolder(View view) {
             super(view);

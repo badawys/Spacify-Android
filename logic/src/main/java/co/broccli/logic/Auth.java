@@ -2,6 +2,7 @@ package co.broccli.logic;
 
 import android.content.Context;
 import android.content.Intent;
+import java.io.IOException;
 import co.broccli.logic.model.APIError.APIError;
 import co.broccli.logic.model.APIError.ErrorUtils;
 import co.broccli.logic.model.OAuth2AccessToken.AccessTokenRequest;
@@ -91,6 +92,7 @@ public class Auth {
         return true;
     }
 
+
     /**
      * Logout user from current active session
      *
@@ -127,6 +129,13 @@ public class Auth {
     }
 
     /**
+     * Logout user from current active session (Offline - Local)
+     */
+    public void localLogout () {
+        mSessionManager.logoutUser();
+    }
+
+    /**
      * Login user using user's email and password
      *
      * @param _context the context of current state of the application
@@ -137,7 +146,7 @@ public class Auth {
     public void login (final Context _context,
                        String email,
                        String password,
-                       final co.broccli.logic.Callback<Boolean> callback) {
+                       final co.broccli.logic.Callback<String> callback) {
 
         ApiInterface apiService =
                 ApiClient.createService(ApiInterface.class, _context);
@@ -149,7 +158,17 @@ public class Auth {
                 if (response.isSuccessful()) {
                     if (!response.body().getAccessToken().isEmpty()) {
                         mSessionManager.createLoginSession(response.body().getAccessToken());
-                        callback.onResult(Boolean.TRUE);
+                        mInstance.getFirebaseJWT(_context, new co.broccli.logic.Callback<String>() {
+                            @Override
+                            public void onResult(String s) {
+                                callback.onResult(s);
+                            }
+
+                            @Override
+                            public void onError(String errorMessage) {
+                                callback.onError(errorMessage);
+                            }
+                        });
                     } else {
                         callback.onError("Login failed, Try again later");
                     }
@@ -161,6 +180,38 @@ public class Auth {
             @Override
             public void onFailure(Call<OAuth2AccessToken> call, Throwable t) {
                 callback.onError(t.getMessage());
+            }
+        });
+    }
+
+    /**
+     *  Get Firebase JWT for loggedin user
+     *
+     * @param _context the context of current state of the application
+     * @param _callback method callback
+     */
+    private void getFirebaseJWT (Context _context, final co.broccli.logic.Callback <String> _callback) {
+        ApiInterface apiService =
+                ApiClient.createService(ApiInterface.class, _context);
+        Call<ResponseBody> call =
+                apiService.getFirebaseJWT();
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response)  {
+                if (response.isSuccessful()) {
+                    try {
+                        _callback.onResult(response.body().string());
+                    } catch (IOException e) {
+                        _callback.onError(e.getMessage());
+                    }
+                } else {
+                    APIError error = ErrorUtils.parseError(response);
+                    _callback.onError(error.getMessage());
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                _callback.onError(t.getMessage());
             }
         });
     }

@@ -5,15 +5,16 @@ android {
     signingConfigs {
     }
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.1"
     defaultConfig {
         applicationId 'co.broccli.spacify'
         minSdkVersion 19
         targetSdkVersion 25
-        versionName 'Alpha-2.0'
-        versionCode 3
+        versionName 'Alpha-3.0'
+        versionCode 7
         renderscriptTargetApi 25
         renderscriptSupportModeEnabled true
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -31,6 +32,7 @@ android {
 
 repositories {
     jcenter()
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
@@ -39,28 +41,38 @@ dependencies {
     compile('com.mikepenz:fastadapter:2.0.0@aar') {
         transitive = true
     }
-    compile 'com.android.support:appcompat-v7:25.0.0'
-    compile 'com.android.support:design:25.0.0'
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.android.support:design:25.0.1'
     compile 'com.roughike:bottom-bar:2.0.2'
-    compile 'com.google.android.gms:play-services-appindexing:9.8.0'
-    compile 'com.android.support:support-v4:25.0.0'
-    compile 'com.android.support:recyclerview-v7:25.0.0'
-    compile 'com.android.support:cardview-v7:25.0.0'
-    compile 'com.android.support:transition:25.0.0'
+    compile 'com.android.support:support-v4:25.0.1'
+    compile 'com.android.support:recyclerview-v7:25.0.1'
+    compile 'com.android.support:cardview-v7:25.0.1'
+    compile 'com.android.support:transition:25.0.1'
     compile 'com.jakewharton:butterknife:8.4.0'
     compile 'com.facebook.fresco:fresco:0.14.1'
     compile 'com.github.medyo:fancybuttons:1.8.2'
     compile 'com.github.ksoichiro:android-observablescrollview:1.6.0'
     compile 'com.ogaclejapan.smarttablayout:utils-v4:1.6.1@aar'
-    compile 'jp.wasabeef:fresco-processors:2.0.0'
     compile 'com.mikepenz:fastadapter-extensions:2.0.0@aar'
     compile 'com.mikepenz:materialize:1.0.0@aar'
+    compile 'fr.tvbarthel.blurdialogfragment:lib:2.2.0'
+    compile 'com.github.florent37:materialtextfield:1.0.5'
+    compile 'com.victor:lib:1.0.4'
+    compile 'com.yalantis:ucrop:2.2.0-native'
+    compile 'com.github.jkwiecien:EasyImage:1.4.0'
+    compile 'com.github.tajchert:nammu:1.1.1'
+    compile 'com.android.support:support-vector-drawable:25.0.1'
+    compile 'io.nlopez.smartlocation:library:3.2.9'
+    compile 'com.google.android.gms:play-services-maps:9.8.0'
+    compile 'com.google.android.gms:play-services-location:9.8.0'
+    compile 'com.google.firebase:firebase-core:9.8.0'
+    compile 'com.google.firebase:firebase-auth:9.8.0'
+    compile 'com.fnp:material-preferences:0.1.4'
     testCompile 'junit:junit:4.12'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    compile 'fr.tvbarthel.blurdialogfragment:lib:2.2.0'
-    compile 'com.github.florent37:materialtextfield:1.0.5'
-    compile 'com.victor:lib:1.0.4'
 }
+
+apply plugin: 'com.google.gms.google-services'

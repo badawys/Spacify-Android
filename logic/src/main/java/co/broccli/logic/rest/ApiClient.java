@@ -2,6 +2,8 @@ package co.broccli.logic.rest;
 
 import android.content.Context;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -50,6 +52,8 @@ public class ApiClient {
                 }
             });
         }
+
+        httpClient.addNetworkInterceptor(new StethoInterceptor());
 
         OkHttpClient client = httpClient.build();
         retrofit = builder.client(client).build();

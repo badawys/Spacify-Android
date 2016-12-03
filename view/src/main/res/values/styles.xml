@@ -6,13 +6,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
-        <item name="colorControlNormal">@color/iron</item>
-        <item name="colorControlActivated">@color/white</item>
-        <item name="colorControlHighlight">@color/white</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="AppTheme.NoActionBar" parent="AppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -23,7 +19,7 @@
 
     <style name="AppTheme.SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowFullscreen">false</item>
     </style>
 
     <style name="AppTheme.Dark.NoActionBar" parent="Theme.AppCompat.NoActionBar">
@@ -47,4 +43,18 @@
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
+    <style name="BB_BottomBarItem_TitleStyle">
+        <item name="android:maxLines">1</item>
+        <item name="android:height">24dp</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="SettingsTheme" parent="AppTheme">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.SpaceTitle" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textSize">30sp</item>
+    </style>
 </resources>

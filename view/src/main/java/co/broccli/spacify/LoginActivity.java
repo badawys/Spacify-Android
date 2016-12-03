@@ -1,5 +1,6 @@
 package co.broccli.spacify;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -14,6 +15,11 @@ import android.util.Log;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.broccli.logic.Callback;
@@ -22,6 +28,8 @@ import co.broccli.logic.SpacifyApi;
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
+
+    private FirebaseAuth mAuth;
 
     @BindView(R.id.input_email)
     EditText _emailText;
@@ -37,6 +45,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        mAuth = FirebaseAuth.getInstance();
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -81,11 +91,23 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
 
-        SpacifyApi.auth().login(this, email, password, new Callback<Boolean>() {
+        SpacifyApi.auth().login(this, email, password, new Callback<String>() {
             @Override
-            public void onResult(Boolean aBoolean) {
-                onLoginSuccess();
-                progressDialog.dismiss();
+            public void onResult(String jwt) {
+                mAuth.signInWithCustomToken(jwt)
+                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    onLoginSuccess();
+                                    progressDialog.dismiss();
+                                } else {
+                                    SpacifyApi.auth().localLogout();
+                                    onLoginFailed("Retry again");
+                                    progressDialog.dismiss();
+                                }
+                            }
+                        });
             }
 
             @Override

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Spacify</string>
+    <string name="app_name">سبيسفاي</string>
 
     <string name="navigation_drawer_open">فتح قائمة التنبيهات</string>
     <string name="navigation_drawer_close">غلق قائمة التنبيهات</string>
@@ -23,11 +23,14 @@
     <string name="title_activity_signup">تسجيل مستخدم جديد</string>
     <string name="joined_spaces">المساحات المسجلة</string>
     <string name="my_spaces">مساحاتي</string>
-    <string name="edit_profile">Edit Profile</string>
-    <string name="edit_profile_title">EDIT PROFILE</string>
-    <string name="change_profile_picture">Change Profile Picture</string>
-    <string name="name">Name</string>
-    <string name="email">Email</string>
-
-
+    <string name="edit_profile">تعديل الحساب الشخصي</string>
+    <string name="edit_profile_title">تعديل الحساب الشخصي</string>
+    <string name="change_profile_picture">تغيير صورة الحساب الشخصي</string>
+    <string name="name">الإسم</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="nearby_places">المساحات المجاورة</string>
+    <string name="title_activity_settings">الإعدادات</string>
+    <string name="title_activity_space">إسم المساحة</string>
+    <string name="join_button">JOIN</string>
+    <string name="space_name">Space Name</string>
 </resources>
