@@ -1,8 +1,8 @@
 package co.broccli.spacify;
 
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,10 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabReselectListener;
-import com.roughike.bottombar.OnTabSelectListener;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import co.broccli.logic.SpacifyApi;
 import co.broccli.spacify.Nearby.NearbyFragment;
 import co.broccli.spacify.Profile.ProfileFragment;
@@ -66,8 +64,22 @@ public class StartActivity extends AppCompatActivity
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
 
-        BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
-        assert bottomBar != null;
+        AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
+        // Create items
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.bottombar_feed, R.drawable.ic_bottombar_feed, R.color.primary);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.bottombar_nearby, R.drawable.ic_bottombar_nearby, R.color.primary);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.bottombar_user, R.drawable.ic_bottombar_user, R.color.primary);
+        // Add items
+        bottomNavigation.addItem(item1);
+        bottomNavigation.addItem(item2);
+        bottomNavigation.addItem(item3);
+        // Change colors
+        bottomNavigation.setAccentColor(Color.parseColor("#03A9F4"));
+        bottomNavigation.setInactiveColor(Color.parseColor("#b2b2b2"));
+        // Force to tint the drawable (useful for font with icon for example)
+        bottomNavigation.setForceTint(true);
+        // Manage titles
+        bottomNavigation.setTitleState(AHBottomNavigation.TitleState.SHOW_WHEN_ACTIVE);
 
         fm.beginTransaction().add(R.id.fragment_container, nearbyFragment, "fragment_nearby").hide(nearbyFragment).commit();
         fm.beginTransaction().add(R.id.fragment_container, profileFragment, "fragment_user").hide(profileFragment).commit();
@@ -75,30 +87,36 @@ public class StartActivity extends AppCompatActivity
 
         active = feedFragment;
 
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
-            public void onTabSelected(@IdRes int tabId) {
-                if (tabId == R.id.tab_feed) {
-                    fm.beginTransaction().hide(active).show(feedFragment).commit();
-                    active = feedFragment;
+            public boolean  onTabSelected(int position, boolean wasSelected) {
+                if (position == 0) {
+                    if (active == feedFragment) {
+                        fm.beginTransaction().detach(active).attach(active).commit();
+                    } else {
+                        fm.beginTransaction().hide(active).show(feedFragment).commit();
+                        active = feedFragment;
+                    }
                 }
 
-                if (tabId == R.id.tab_nearby) {
-                    fm.beginTransaction().hide(active).show(nearbyFragment).commit();
-                    active = nearbyFragment;
+                if (position == 1) {
+                    if (active == nearbyFragment) {
+                        fm.beginTransaction().detach(active).attach(active).commit();
+                    } else {
+                        fm.beginTransaction().hide(active).show(nearbyFragment).commit();
+                        active = nearbyFragment;
+                    }
                 }
 
-                if (tabId == R.id.tab_user) {
-                    fm.beginTransaction().hide(active).show(profileFragment).commit();
-                    active = profileFragment;
+                if (position == 2) {
+                    if (active == profileFragment) {
+                        fm.beginTransaction().detach(active).attach(active).commit();
+                    } else {
+                        fm.beginTransaction().hide(active).show(profileFragment).commit();
+                        active = profileFragment;
+                    }
                 }
-            }
-        });
-
-        bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
-            @Override
-            public void onTabReSelected(@IdRes int tabId) {
-                fm.beginTransaction().detach(active).attach(active).commit();
+                return true;
             }
         });
     }
