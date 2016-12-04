@@ -1,4 +1,4 @@
-package co.broccli.spacify;
+package co.broccli.spacify.Auth;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.broccli.logic.SpacifyApi;
+import co.broccli.spacify.R;
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
