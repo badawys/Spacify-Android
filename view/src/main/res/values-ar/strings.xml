@@ -31,4 +31,7 @@
     <string name="nearby_places">المساحات المجاورة</string>
     <string name="title_activity_settings">الإعدادات</string>
     <string name="title_activity_space">إسم المساحة</string>
+    <string name="join_button">انضم</string>
+    <string name="space_name">اسم المساحة</string>
+    <string name="notification_text"><b>اسم الشخص</b> قام بشيء ما وهذا تنبيه لذلك الشيء</string>
 </resources>

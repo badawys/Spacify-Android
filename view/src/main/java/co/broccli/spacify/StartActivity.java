@@ -1,8 +1,8 @@
 package co.broccli.spacify;
 
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,23 +10,28 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.mikepenz.fastadapter.adapters.FastItemAdapter;
 
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabReselectListener;
-import com.roughike.bottombar.OnTabSelectListener;
 import co.broccli.logic.SpacifyApi;
+import co.broccli.spacify.Feed.FeedFragment;
+import co.broccli.spacify.Feed.FeedPostsItem;
 import co.broccli.spacify.Nearby.NearbyFragment;
+import co.broccli.spacify.Notification.NotificationItem;
 import co.broccli.spacify.Profile.ProfileFragment;
 import co.broccli.spacify.Utils.NetworkStateReceiver;
 
 
 public class StartActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, NetworkStateReceiver.NetworkStateReceiverListener {
+        implements NetworkStateReceiver.NetworkStateReceiverListener {
 
     private NetworkStateReceiver networkStateReceiver;
 
@@ -62,12 +67,22 @@ public class StartActivity extends AppCompatActivity
         assert toolbar != null;
         toolbar.setNavigationIcon(R.drawable.ic_toolbar_notification);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        assert navigationView != null;
-        navigationView.setNavigationItemSelectedListener(this);
-
-        BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
-        assert bottomBar != null;
+        AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
+        // Create items
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.bottombar_feed, R.drawable.ic_bottombar_feed, R.color.primary);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.bottombar_nearby, R.drawable.ic_bottombar_nearby, R.color.primary);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.bottombar_user, R.drawable.ic_bottombar_user, R.color.primary);
+        // Add items
+        bottomNavigation.addItem(item1);
+        bottomNavigation.addItem(item2);
+        bottomNavigation.addItem(item3);
+        // Change colors
+        bottomNavigation.setAccentColor(Color.parseColor("#03A9F4"));
+        bottomNavigation.setInactiveColor(Color.parseColor("#b2b2b2"));
+        // Force to tint the drawable (useful for font with icon for example)
+        bottomNavigation.setForceTint(true);
+        // Manage titles
+        bottomNavigation.setTitleState(AHBottomNavigation.TitleState.SHOW_WHEN_ACTIVE);
 
         fm.beginTransaction().add(R.id.fragment_container, nearbyFragment, "fragment_nearby").hide(nearbyFragment).commit();
         fm.beginTransaction().add(R.id.fragment_container, profileFragment, "fragment_user").hide(profileFragment).commit();
@@ -75,32 +90,58 @@ public class StartActivity extends AppCompatActivity
 
         active = feedFragment;
 
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
-            public void onTabSelected(@IdRes int tabId) {
-                if (tabId == R.id.tab_feed) {
-                    fm.beginTransaction().hide(active).show(feedFragment).commit();
-                    active = feedFragment;
+            public boolean  onTabSelected(int position, boolean wasSelected) {
+                if (position == 0) {
+                    if (active == feedFragment) {
+                        fm.beginTransaction().detach(active).attach(active).commit();
+                    } else {
+                        fm.beginTransaction().hide(active).show(feedFragment).commit();
+                        active = feedFragment;
+                    }
                 }
 
-                if (tabId == R.id.tab_nearby) {
-                    fm.beginTransaction().hide(active).show(nearbyFragment).commit();
-                    active = nearbyFragment;
+                if (position == 1) {
+                    if (active == nearbyFragment) {
+                        fm.beginTransaction().detach(active).attach(active).commit();
+                    } else {
+                        fm.beginTransaction().hide(active).show(nearbyFragment).commit();
+                        active = nearbyFragment;
+                    }
                 }
 
-                if (tabId == R.id.tab_user) {
-                    fm.beginTransaction().hide(active).show(profileFragment).commit();
-                    active = profileFragment;
+                if (position == 2) {
+                    if (active == profileFragment) {
+                        fm.beginTransaction().detach(active).attach(active).commit();
+                    } else {
+                        fm.beginTransaction().hide(active).show(profileFragment).commit();
+                        active = profileFragment;
+                    }
                 }
+                return true;
             }
         });
 
-        bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
-            @Override
-            public void onTabReSelected(@IdRes int tabId) {
-                fm.beginTransaction().detach(active).attach(active).commit();
-            }
-        });
+        RecyclerView mRecyclerView  = (RecyclerView) findViewById(R.id.notifications);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        FastItemAdapter fastAdapter = new FastItemAdapter();
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView .setAdapter(fastAdapter);
+        fastAdapter.add(
+                new NotificationItem(),
+                new NotificationItem(),
+                new NotificationItem(),
+                new NotificationItem(),
+                new NotificationItem(),
+                new NotificationItem(),
+                new NotificationItem(),
+                new NotificationItem(),
+                new NotificationItem(),
+                new NotificationItem(),
+                new NotificationItem(),
+                new NotificationItem()
+        );
     }
 
     @Override
@@ -152,30 +193,6 @@ public class StartActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-//        int id = item.getItemId();
-//
-//        if (id == R.id.nav_camera) {
-//            // Handle the camera action
-//        } else if (id == R.id.nav_gallery) {
-//
-//        } else if (id == R.id.nav_slideshow) {
-//
-//        } else if (id == R.id.nav_manage) {
-//
-//        } else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//
-//        }
-//
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 
     @Override
     public void networkAvailable() {

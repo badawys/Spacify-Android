@@ -38,4 +38,7 @@
         "technologically advanced and open to imagination and magic."
     </string>
     <string name="title_activity_settings">Settings</string>
+    <string name="join_button">JOIN</string>
+    <string name="space_name">Space Name</string>
+    <string name="notification_text"><b>User Name</b> did something and this ia a notification</string>
 </resources>

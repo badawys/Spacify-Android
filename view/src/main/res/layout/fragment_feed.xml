@@ -3,32 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:tag="fragment_feed"
-    tools:context="co.broccli.spacify.FeedFragment">
+    tools:context="co.broccli.spacify.Feed.FeedFragment">
 
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/feed_posts"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/oops"
-            android:gravity="center"
-            android:textSize="50dp"
-            android:textColor="@color/colorDivider"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/can_not_load_your_feed"
-            android:layout_marginTop="19dp"
-            android:gravity="center"/>
-
-    </LinearLayout>
-
-
-
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"/>
 </RelativeLayout>
