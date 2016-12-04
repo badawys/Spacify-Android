@@ -8,6 +8,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.squareup.leakcanary.LeakCanary;
 
 import co.broccli.logic.SpacifyApi;
+import co.broccli.spacify.Auth.LoginActivity;
 
 public class SpacifyApp extends Application {
 

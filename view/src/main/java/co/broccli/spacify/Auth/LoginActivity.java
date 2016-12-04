@@ -1,4 +1,4 @@
-package co.broccli.spacify;
+package co.broccli.spacify.Auth;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +24,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.broccli.logic.Callback;
 import co.broccli.logic.SpacifyApi;
+import co.broccli.spacify.R;
+import co.broccli.spacify.StartActivity;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";

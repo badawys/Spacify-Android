@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:orientation="vertical"
+    android:clickable="true"
+    android:background="?attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/space_photo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            fresco:roundedCornerRadius="40dp"
+            fresco:placeholderImage="@color/base"
+            android:layout_gravity="center_vertical"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/notification_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/notification_text" />
+            <TextView
+                android:id="@+id/notification_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="2 hours ago"
+                android:textSize="12sp"
+                android:textColor="@color/aluminum"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/verticleLine"
+        android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="50dp"
+        android:background="#d6d6d6"/>
+</LinearLayout>
