@@ -3,13 +3,13 @@
     android:key="first_level"
     android:title="@string/title_activity_settings">
 
-    <PreferenceCategory android:title="Account">
+    <PreferenceCategory android:title="@string/preference_category_account">
         <!--<EditTextPreference-->
             <!--android:key="change_password"-->
             <!--android:title="Change Password"-->
             <!--android:password="true" />-->
         <Preference
             android:key="logout"
-            android:title="Log Out" />
+            android:title="@string/prefrences_logout" />
     </PreferenceCategory>
 </PreferenceScreen>

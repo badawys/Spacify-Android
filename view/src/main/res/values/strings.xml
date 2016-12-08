@@ -41,4 +41,12 @@
     <string name="join_button">JOIN</string>
     <string name="space_name">Space Name</string>
     <string name="notification_text"><b>User Name</b> did something and this ia a notification</string>
+    <string name="action_search">Search</string>
+    <string name="search_title">Search</string>
+    <string name="no_search_results">No Search Results</string>
+    <string name="search_hint">Search...</string>
+    <string name="my_spaces_settings_button">SETTINGS</string>
+    <string name="joined_spaces_joined_button">JOINED</string>
+    <string name="prefrences_logout">Logout</string>
+    <string name="preference_category_account">Account</string>
 </resources>

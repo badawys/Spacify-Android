@@ -1,16 +1,12 @@
 <resources>
     <string name="app_name">سبيسفاي</string>
-
     <string name="navigation_drawer_open">فتح قائمة التنبيهات</string>
     <string name="navigation_drawer_close">غلق قائمة التنبيهات</string>
-
     <string name="action_settings">الإعدادات</string>
     <string name="action_add">أضف</string>
-
     <string name="nearby_page">صفحة الجوار</string>
     <string name="feed_page">صفحة الأخبار</string>
     <string name="user_page">صفحة المستخدم</string>
-
     <string name="bottombar_feed">الأخبار</string>
     <string name="bottombar_nearby">الجوار</string>
     <string name="bottombar_user">المستخدم</string>
@@ -34,4 +30,12 @@
     <string name="join_button">انضم</string>
     <string name="space_name">اسم المساحة</string>
     <string name="notification_text"><b>اسم الشخص</b> قام بشيء ما وهذا تنبيه لذلك الشيء</string>
+    <string name="action_search">بحث</string>
+    <string name="search_title">بحث</string>
+    <string name="no_search_results">لا توجد نتائج للبحث</string>
+    <string name="search_hint">بحث...</string>
+    <string name="my_spaces_settings_button">إعدادات</string>
+    <string name="joined_spaces_joined_button">مشترك</string>
+    <string name="prefrences_logout">تسجيل خروج</string>
+    <string name="preference_category_account">الحساب</string>
 </resources>

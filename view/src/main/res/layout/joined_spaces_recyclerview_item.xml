@@ -37,7 +37,7 @@
         fancy:fb_fontIconResource="&#xf00c;"
         fancy:fb_iconPosition="left"
         fancy:fb_textSize="12sp"
-        fancy:fb_text="JOIEND"
+        fancy:fb_text="@string/joined_spaces_joined_button"
         fancy:fb_textColor="#FFFFFF"/>
 
     <TextView
