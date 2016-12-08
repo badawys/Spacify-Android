@@ -37,7 +37,7 @@
         fancy:fb_fontIconResource="&#xf013;"
         fancy:fb_iconPosition="left"
         fancy:fb_textSize="12sp"
-        fancy:fb_text="SETTINGS"
+        fancy:fb_text="@string/my_spaces_settings_button"
         fancy:fb_textColor="#FFFFFF"/>
 
     <TextView

@@ -1,9 +1,9 @@
 package co.broccli.spacify;
 
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -20,13 +20,12 @@ import android.widget.LinearLayout;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.mikepenz.fastadapter.adapters.FastItemAdapter;
-
 import co.broccli.logic.SpacifyApi;
 import co.broccli.spacify.Feed.FeedFragment;
-import co.broccli.spacify.Feed.FeedPostsItem;
 import co.broccli.spacify.Nearby.NearbyFragment;
 import co.broccli.spacify.Notification.NotificationItem;
 import co.broccli.spacify.Profile.ProfileFragment;
+import co.broccli.spacify.Search.SearchActivity;
 import co.broccli.spacify.Utils.NetworkStateReceiver;
 
 
@@ -186,7 +185,9 @@ public class StartActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_search) {
+            Intent spaceIntent = new Intent(this, SearchActivity.class);
+            this.startActivity(spaceIntent);
             return true;
         }
 
