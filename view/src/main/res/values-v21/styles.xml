@@ -19,4 +19,10 @@
         <item name="contentInsetStart">72dp</item>
         <item name="contentInsetLeft">72dp</item>
     </style>
+
+    <style name="CreateSpaceTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+    </style>
 </resources>

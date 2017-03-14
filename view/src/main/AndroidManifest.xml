@@ -65,10 +65,15 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDP2dFsS4zeenkA2A5aTLuzAey3yeD-Fbk" />
 
-        <activity android:name=".Search.SearchActivity"
+        <activity
+            android:name=".Search.SearchActivity"
             android:label="@string/search_title"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".Space.CreateSpaceActivity"
+            android:label="@string/create_space"
+            android:theme="@style/CreateSpaceTheme"/>
     </application>
 
 </manifest>

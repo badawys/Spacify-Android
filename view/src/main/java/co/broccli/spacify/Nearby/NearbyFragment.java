@@ -35,11 +35,14 @@ import com.mikepenz.fastadapter.IItem;
 import com.mikepenz.fastadapter.adapters.FastItemAdapter;
 import com.victor.loading.rotate.RotateLoading;
 import co.broccli.spacify.R;
+import co.broccli.spacify.Space.CreateSpaceActivity;
 import co.broccli.spacify.Space.SpaceActivity;
+import co.broccli.spacify.StartActivity;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 import io.nlopez.smartlocation.location.config.LocationParams;
 import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider;
+import mehdi.sakout.fancybuttons.FancyButton;
 
 public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnLocationUpdatedListener, ObservableScrollViewCallbacks {
 
@@ -56,6 +59,7 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
     private LinearLayout.LayoutParams defaultNearbyListLayoutParams;
     private boolean mapLayoutIsExtended = false;
     private LinearLayoutManager linearLayoutManager;
+    private FancyButton addButton;
 
     public NearbyFragment() {
         // Required empty public constructor
@@ -78,6 +82,14 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
         mRecyclerView  = (ObservableRecyclerView) view.findViewById(R.id.nearbyList);
         mRecyclerView.setScrollViewCallbacks(this);
         linearLayoutManager = new LinearLayoutManager(getContext());
+
+        addButton = (FancyButton) view.findViewById(R.id.addButton);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), CreateSpaceActivity.class));
+            }
+        });
 
         return  view;
     }

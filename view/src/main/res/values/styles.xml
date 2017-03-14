@@ -57,4 +57,15 @@
     <style name="TextAppearance.AppCompat.SpaceTitle" parent="TextAppearance.AppCompat.Title">
         <item name="android:textSize">30sp</item>
     </style>
+
+    <style name="CreateSpaceTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+    </style>
+
+    <style name="FullWidthEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:padding">20dp</item>
+        <item name="android:background">@null</item>
+        <item name="android:textSize">@dimen/abc_text_size_subhead_material</item>
+    </style>
 </resources>

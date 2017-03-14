@@ -38,4 +38,19 @@
     <string name="joined_spaces_joined_button">مشترك</string>
     <string name="prefrences_logout">تسجيل خروج</string>
     <string name="preference_category_account">الحساب</string>
+    <string name="create_space">إنشاء مساحة جديدة</string>
+    <string name="add_space_picture">أضف صورة المساحة</string>
+    <string name="create_space_could_not_find_your_location_error">لم نستطع الوصول إلى موقعك الجغرافي!</string>
+    <string name="an_error_is_happened">لقد حدث خطأ ما!</string>
+    <string name="create_space_name_is_required">يجب أن تختار إسما لمساحتك!</string>
+    <string name="create_space_step1_header">يمكن للناس الوصول إلى مساحتك من هذه المنطقة</string>
+    <string name="create_space_step1_sub_header">إضغط على السهم للوصول إلى الخطوة التالية إذا كان هذا مناسباً</string>
+    <string name="create_space_step2_header">بيانات المساحة</string>
+    <string name="create_space_step2_sub_header">إملئ بيانات مساحتك الجديدة ثم إضغط على علامةالصح للتأكيد</string>
+    <string name="create_space_type_is_required">يجب عليك إختيار نوع المساحة أول!ا</string>
+    <string name="create_space_wait_message">برجاء الإنتظار قليلاَ</string>
+    <string name="edit_text_placeholder_space_name">إسم المساحة</string>
+    <string name="select_image">إختر صورة</string>
+    <string name="space_type_private">خاصة</string>
+    <string name="space_type_public">عامة</string>
 </resources>
