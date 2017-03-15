@@ -6,6 +6,7 @@ import co.broccli.logic.model.OAuth2AccessToken.AccessTokenRequest;
 import co.broccli.logic.model.OAuth2AccessToken.OAuth2AccessToken;
 import co.broccli.logic.model.profile.User;
 import co.broccli.logic.model.signup.Signup;
+import co.broccli.logic.model.space.CreateSpace;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -83,6 +84,18 @@ public interface ApiInterface {
     @POST("profile")
     Call<User> editUser(
             @Header("X-HTTP-Method-Override") String _method,
+            @PartMap() Map<String, RequestBody> partMap,
+            @Part MultipartBody.Part photo
+    );
+
+    /**
+     * Create Space
+     *
+     * @return Space
+     */
+    @Multipart
+    @POST("space/create")
+    Call<CreateSpace> createSpace(
             @PartMap() Map<String, RequestBody> partMap,
             @Part MultipartBody.Part photo
     );

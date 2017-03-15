@@ -4,9 +4,15 @@ import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.widget.Toast;
+
 import com.github.paolorotolo.appintro.AppIntro2;
 import com.google.android.gms.maps.model.LatLng;
 import javax.annotation.Nullable;
+
+import co.broccli.logic.Callback;
+import co.broccli.logic.SpacifyApi;
+import co.broccli.logic.model.space.CreateSpace;
 import co.broccli.spacify.R;
 
 public class CreateSpaceActivity extends AppIntro2 {
@@ -57,6 +63,27 @@ public class CreateSpaceActivity extends AppIntro2 {
             progressDialog.setIndeterminate(true);
             progressDialog.setMessage(getString(R.string.create_space_wait_message));
             progressDialog.show();
+
+            SpacifyApi.space().createNewSpace(this,
+                    SpaceName,
+                    SpaceType,
+                    SpaceLocation.longitude,
+                    SpaceLocation.latitude,
+                    SpacePhoto,
+                    new Callback<CreateSpace>() {
+                @Override
+                public void onResult(CreateSpace createSpace) {
+                    progressDialog.dismiss();
+                    // TODO: redirect to the new space
+                    Toast.makeText(CreateSpaceActivity.this, "Yes", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onError(String errorMessage) {
+                    Toast.makeText(CreateSpaceActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
+                }
+            });
         }
     }
 }

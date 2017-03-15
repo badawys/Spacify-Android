@@ -86,4 +86,13 @@ public class SpacifyApi {
     public static Profile profile () {
         return Profile.getInstance();
     }
+
+    /**
+     * All the spaces related operations
+     *
+     * @return instance if Auth class
+     */
+    public static Space space () {
+        return Space.getInstance();
+    }
 }
