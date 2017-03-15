@@ -12,20 +12,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import co.broccli.logic.model.space.SpaceData;
 import co.broccli.spacify.R;
 
-public class NearbyListItem extends AbstractItem<NearbyListItem, NearbyListItem.ViewHolder> {
+class NearbyListItem extends AbstractItem<NearbyListItem, NearbyListItem.ViewHolder> {
 
-    protected String imageURL;
-    protected String name;
+    protected SpaceData spaceData;
 
-    public NearbyListItem withImageURL(String imageURL) {
-        this.imageURL = imageURL;
-        return this;
-    }
-
-    NearbyListItem withName(String name) {
-        this.name = name;
+    NearbyListItem withSpaceData(SpaceData spaceData) {
+        this.spaceData = spaceData;
         return this;
     }
 
@@ -45,7 +40,8 @@ public class NearbyListItem extends AbstractItem<NearbyListItem, NearbyListItem.
         //call super so the selection is already handled for you
         super.bindView(viewHolder, payloads);
 
-        viewHolder.spaceName.setText(name);
+        viewHolder.spaceName.setText(spaceData.getName());
+        viewHolder.spacePhoto.setImageURI("https://spacify.s3-accelerate.amazonaws.com/" + spaceData.getPhoto());
     }
 
     //reset the view here (this is an optional method, but recommended)
@@ -54,7 +50,6 @@ public class NearbyListItem extends AbstractItem<NearbyListItem, NearbyListItem.
         super.unbindView(holder);
 
     }
-
 
     //The viewHolder used for this item. This viewHolder is always reused by the RecyclerView so scrolling is blazing fast
     static class ViewHolder extends RecyclerView.ViewHolder {

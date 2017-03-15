@@ -8,6 +8,7 @@ import co.broccli.logic.model.profile.User;
 import co.broccli.logic.model.signup.Signup;
 import co.broccli.logic.model.space.CreateSpace;
 import co.broccli.logic.model.space.GetSpace;
+import co.broccli.logic.model.space.NearbySpaces;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -32,7 +33,8 @@ public interface ApiInterface {
      * @return Access-Token data
      */
     @POST("oauth/token")
-    Call<OAuth2AccessToken> getAccessTokenData(@Body AccessTokenRequest accessTokenRequest);
+    Call<OAuth2AccessToken> getAccessTokenData(
+            @Body AccessTokenRequest accessTokenRequest);
 
     /**
      *  Firebase JWT call
@@ -102,8 +104,18 @@ public interface ApiInterface {
     /**
      * Get Space
      *
-     * @return User
+     * @return Space
      */
     @GET("space/{spaceId}")
     Call<GetSpace> getSpace(@Path("spaceId") int id);
+
+    /**
+     * Get Nearby Spaces
+     *
+     * @return SpaceList
+     */
+    @GET("space/nearby/{lng}/{lat}")
+    Call<NearbySpaces> getNearby(
+            @Path("lng") double lng,
+            @Path("lat") double lat);
 }

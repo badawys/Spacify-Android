@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +34,13 @@ import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.IItem;
 import com.mikepenz.fastadapter.adapters.FastItemAdapter;
+import com.mikepenz.fastadapter.listeners.ClickEventHook;
 import com.victor.loading.rotate.RotateLoading;
+
+import co.broccli.logic.Callback;
+import co.broccli.logic.SpacifyApi;
+import co.broccli.logic.model.space.NearbySpaces;
+import co.broccli.logic.model.space.SpaceData;
 import co.broccli.spacify.R;
 import co.broccli.spacify.Space.CreateSpaceActivity;
 import co.broccli.spacify.Space.SpaceActivity;
@@ -44,7 +51,10 @@ import io.nlopez.smartlocation.location.config.LocationParams;
 import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider;
 import mehdi.sakout.fancybuttons.FancyButton;
 
-public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnLocationUpdatedListener, ObservableScrollViewCallbacks {
+public class NearbyFragment extends Fragment implements
+        OnMapReadyCallback,
+        OnLocationUpdatedListener,
+        ObservableScrollViewCallbacks {
 
     SmartLocation smartLocation;
     private SupportMapFragment mapFragment;
@@ -60,6 +70,8 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
     private boolean mapLayoutIsExtended = false;
     private LinearLayoutManager linearLayoutManager;
     private FancyButton addButton;
+
+    FastItemAdapter fastAdapter = new FastItemAdapter();
 
     public NearbyFragment() {
         // Required empty public constructor
@@ -114,32 +126,28 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
         fragmentTransaction.commit();
         mapFragment.getMapAsync(this);
 
-        FastItemAdapter fastAdapter = new FastItemAdapter();
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView .setAdapter(fastAdapter);
-        fastAdapter.withOnClickListener(new FastAdapter.OnClickListener() {
-            @Override
-            public boolean onClick(View v, IAdapter adapter, IItem item, int position) {
-                        Intent spaceIntent = new Intent(getActivity(), SpaceActivity.class);
-                        getActivity().startActivity(spaceIntent);
-                return true;
-            }
-        });
+        mRecyclerView.setItemAnimator(null);
 
-        fastAdapter.add(
-                new NearbyListItem().withName("Space1 Name"),
-                new NearbyListItem().withName("Space2 Name"),
-                new NearbyListItem().withName("Space3 Name"),
-                new NearbyListItem().withName("Space4 Name"),
-                new NearbyListItem().withName("Space5 Name"),
-                new NearbyListItem().withName("Space6 Name"),
-                new NearbyListItem().withName("Space7 Name"),
-                new NearbyListItem().withName("Space8 Name"),
-                new NearbyListItem().withName("Space9 Name"),
-                new NearbyListItem().withName("Space10 Name"),
-                new NearbyListItem().withName("Space11 Name"),
-                new NearbyListItem().withName("Space12 Name"),
-                new NearbyListItem().withName("Space13 Name"));
+        fastAdapter.withItemEvent(new ClickEventHook<NearbyListItem>() {
+              @Nullable
+              @Override
+              public View onBind(@NonNull RecyclerView.ViewHolder viewHolder) {
+                  //return the views on which you want to bind this event
+                  if (viewHolder instanceof NearbyListItem.ViewHolder) {
+                      return ((NearbyListItem.ViewHolder) viewHolder).view;
+                  }
+                  return null;
+              }
+
+              @Override
+              public void onClick(View v, int position, FastAdapter<NearbyListItem> fastAdapter, NearbyListItem item) {
+                  Intent spaceIntent = new Intent(getActivity(), SpaceActivity.class);
+                  spaceIntent.putExtra("EXTRA_SPACE_ID", item.spaceData.getId());
+                  getActivity().startActivity(spaceIntent);
+              }
+          });
     }
 
 
@@ -203,6 +211,25 @@ public class NearbyFragment extends Fragment implements  OnMapReadyCallback, OnL
             mMap.animateCamera(cameraUpdate);
             mapCircle = mMap.addCircle(circleOptions.center(latLng));
         }
+
+        SpacifyApi.space().getNearby(getContext(),
+                location.getLongitude(),
+                location.getLatitude(),
+                new Callback<NearbySpaces>() {
+            @Override
+            public void onResult(NearbySpaces nearbySpaces) {
+                fastAdapter.clear();
+                for (SpaceData space : nearbySpaces.getData()) {
+                    fastAdapter.add(new NearbyListItem().withSpaceData(space));
+                }
+
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+
+            }
+        });
     }
 
     @Override

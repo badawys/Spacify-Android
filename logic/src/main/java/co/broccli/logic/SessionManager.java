@@ -29,12 +29,9 @@ public class SessionManager {
      * Create login session
      */
     public void createLoginSession(String accessToken) {
-        // Storing login value as TRUE
+
         editor.putBoolean(IS_LOGIN, true);
-
-        // Storing login value as TRUE
         editor.putString(ACCESS_TOKEN, accessToken);
-
         // commit changes
         editor.commit();
     }
