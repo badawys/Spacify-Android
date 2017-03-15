@@ -7,6 +7,7 @@ import java.util.HashMap;
 import co.broccli.logic.model.APIError.APIError;
 import co.broccli.logic.model.APIError.ErrorUtils;
 import co.broccli.logic.model.space.CreateSpace;
+import co.broccli.logic.model.space.GetSpace;
 import co.broccli.logic.rest.ApiClient;
 import co.broccli.logic.rest.ApiInterface;
 import okhttp3.MultipartBody;
@@ -24,6 +25,11 @@ public class Space {
      * The Space class instance
      */
     private static Space mInstance = null;
+
+    /**
+     *  Profile class name
+     */
+    private static final String TAG = Space.class.getSimpleName();
 
     /**
      * This method is used to create new instance of the
@@ -89,6 +95,68 @@ public class Space {
             }
             @Override
             public void onFailure(Call<CreateSpace> call, Throwable t) {
+                callback.onError(t.getMessage());
+            }
+        });
+    }
+
+    /**
+     *  Get the space data
+     *
+     * @param _context the context of current state of the application
+     * @param callback  method callback
+     */
+    public void getSpace (final Context _context,
+                                final int id,
+                                final Callback<GetSpace> callback) {
+
+        // First: get the offline data (if existed) asynchronously
+        Offline.get(TAG+id, GetSpace.class, new Callback<Object>() {
+            @Override
+            public void onResult(Object o) {
+                // if there is a cached copy of User object return it to the client
+                if (o instanceof GetSpace)
+                    callback.onResult((GetSpace) o);
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                // Error handling TODO: Logging
+            }
+        });
+
+        // Second: get the online data
+        ApiInterface apiService =
+                ApiClient.createService(ApiInterface.class, _context);
+        Call<GetSpace> call = apiService.getSpace(id);
+        call.enqueue(new retrofit2.Callback<GetSpace>() {
+            @Override
+            public void onResponse(Call<GetSpace> call, Response<GetSpace> response) {
+                // if there is no error from the server, return the data to the
+                // client and cache the new data for the offline use
+                if (response.isSuccessful()) {
+                    callback.onResult(response.body());
+                    Offline.add(TAG+id, response.body(), new Callback<Boolean>() {
+                        @Override
+                        public void onResult(Boolean aBoolean) {
+                            //Data had been cached successfully
+                            // TODO: Logging
+                        }
+
+                        @Override
+                        public void onError(String errorMessage) {
+                            // Error handling TODO: Logging
+                        }
+                    });
+                } else {
+                    // if there is error from the server, parse the error and
+                    // return it to the client
+                    APIError error = ErrorUtils.parseError(response);
+                    callback.onError(error.getMessage());
+                }
+            }
+            @Override
+            public void onFailure(Call<GetSpace> call, Throwable t) {
                 callback.onError(t.getMessage());
             }
         });

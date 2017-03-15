@@ -33,7 +33,7 @@ import pl.aprilapps.easyphotopicker.EasyImage;
 
 public class CreateSpaceStep2Fragment extends Fragment implements ISlidePolicy {
 
-    private SimpleDraweeView _ProfilePhoto;
+    private SimpleDraweeView _SpacePhoto;
     private EditText _SpaceName;
     private RadioGroup _SpaceType;
     private LinearLayout _SpacePhotoButton;
@@ -58,7 +58,7 @@ public class CreateSpaceStep2Fragment extends Fragment implements ISlidePolicy {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_create_space_step2, container, false);
 
-        _ProfilePhoto = (SimpleDraweeView) view.findViewById(R.id.space_pic_view);
+        _SpacePhoto = (SimpleDraweeView) view.findViewById(R.id.space_pic_view);
         _SpaceName = (EditText) view.findViewById(R.id.space_name_text_box);
         _SpaceType = (RadioGroup) view.findViewById(R.id.space_type_radio_group);
         _SpacePhotoButton = (LinearLayout) view.findViewById(R.id.add_space_photo_button);
@@ -135,7 +135,7 @@ public class CreateSpaceStep2Fragment extends Fragment implements ISlidePolicy {
         if (resultCode == Activity.RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
 
             final Uri resultUri = UCrop.getOutput(data);
-            setProfilePhoto(resultUri.toString());
+            setSpacePhoto(resultUri.toString());
             SpacePhoto = resultUri;
 
         } else if (resultCode == UCrop.RESULT_ERROR) {
@@ -159,7 +159,7 @@ public class CreateSpaceStep2Fragment extends Fragment implements ISlidePolicy {
         }
     }
 
-    private void setProfilePhoto (String url) {
+    private void setSpacePhoto (String url) {
 
         Uri uri = Uri.parse(url);
 
@@ -170,10 +170,10 @@ public class CreateSpaceStep2Fragment extends Fragment implements ISlidePolicy {
         PipelineDraweeController photoController =
                 (PipelineDraweeController) Fresco.newDraweeControllerBuilder()
                         .setImageRequest(profilePhotoRequest)
-                        .setOldController(_ProfilePhoto.getController())
+                        .setOldController(_SpacePhoto.getController())
                         .build();
 
-        _ProfilePhoto.setController(photoController);
+        _SpacePhoto.setController(photoController);
     }
 
     @Override

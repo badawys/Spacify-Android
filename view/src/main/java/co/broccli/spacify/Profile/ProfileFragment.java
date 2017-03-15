@@ -127,10 +127,10 @@ public class ProfileFragment extends Fragment {
                     if (firebaseUser.getEmail() != user.getEmail())
                         firebaseUser.updateEmail(user.getEmail());
                     if (firebaseUser.getDisplayName() != user.getName() ||
-                            firebaseUser.getPhotoUrl() != Uri.parse("http://spacify.s3.amazonaws.com/" + user.getPhoto())) {
+                            firebaseUser.getPhotoUrl() != Uri.parse("https://spacify.s3-accelerate.amazonaws.com/" + user.getPhoto())) {
                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                 .setDisplayName(user.getName())
-                                .setPhotoUri(Uri.parse("http://spacify.s3.amazonaws.com/" + user.getPhoto()))
+                                .setPhotoUri(Uri.parse("https://spacify.s3-accelerate.amazonaws.com/" + user.getPhoto()))
                                 .build();
                         firebaseUser.updateProfile(profileUpdates);
                     }
@@ -150,7 +150,7 @@ public class ProfileFragment extends Fragment {
      */
     private void setProfilePhoto (String url) {
 
-        Uri uri = Uri.parse("http://spacify.s3.amazonaws.com/" + url);
+        Uri uri = Uri.parse("https://spacify.s3-accelerate.amazonaws.com/" + url);
 
         Postprocessor blurPostprocessor = new BasePostprocessor() {
 

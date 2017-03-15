@@ -7,9 +7,9 @@ import co.broccli.logic.model.OAuth2AccessToken.OAuth2AccessToken;
 import co.broccli.logic.model.profile.User;
 import co.broccli.logic.model.signup.Signup;
 import co.broccli.logic.model.space.CreateSpace;
+import co.broccli.logic.model.space.GetSpace;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -18,11 +18,10 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
-import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
-import rx.Observable;
+import retrofit2.http.Path;
 
 public interface ApiInterface {
 
@@ -99,4 +98,12 @@ public interface ApiInterface {
             @PartMap() Map<String, RequestBody> partMap,
             @Part MultipartBody.Part photo
     );
+
+    /**
+     * Get Space
+     *
+     * @return User
+     */
+    @GET("space/{spaceId}")
+    Call<GetSpace> getSpace(@Path("spaceId") int id);
 }

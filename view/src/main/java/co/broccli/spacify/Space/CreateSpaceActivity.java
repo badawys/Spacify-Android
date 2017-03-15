@@ -1,6 +1,7 @@
 package co.broccli.spacify.Space;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -74,8 +75,9 @@ public class CreateSpaceActivity extends AppIntro2 {
                 @Override
                 public void onResult(CreateSpace createSpace) {
                     progressDialog.dismiss();
-                    // TODO: redirect to the new space
-                    Toast.makeText(CreateSpaceActivity.this, "Yes", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getBaseContext(), SpaceActivity.class);
+                    intent.putExtra("EXTRA_SPACE_ID", createSpace.getSpace().getId());
+                    startActivity(intent);
                 }
 
                 @Override
