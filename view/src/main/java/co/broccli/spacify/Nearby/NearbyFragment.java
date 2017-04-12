@@ -18,9 +18,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.google.android.gms.location.DetectedActivity;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -45,6 +48,7 @@ import co.broccli.spacify.R;
 import co.broccli.spacify.Space.CreateSpaceActivity;
 import co.broccli.spacify.Space.SpaceActivity;
 import co.broccli.spacify.StartActivity;
+import io.nlopez.smartlocation.OnActivityUpdatedListener;
 import io.nlopez.smartlocation.OnLocationUpdatedListener;
 import io.nlopez.smartlocation.SmartLocation;
 import io.nlopez.smartlocation.location.config.LocationParams;
@@ -70,6 +74,7 @@ public class NearbyFragment extends Fragment implements
     private boolean mapLayoutIsExtended = false;
     private LinearLayoutManager linearLayoutManager;
     private FancyButton addButton;
+    private FancyButton refreshButton;
 
     FastItemAdapter fastAdapter = new FastItemAdapter();
 
@@ -103,6 +108,14 @@ public class NearbyFragment extends Fragment implements
             }
         });
 
+        refreshButton = (FancyButton) view.findViewById(R.id.refreshButton);
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startLocationByActivity();
+            }
+        });
+
         return  view;
     }
 
@@ -125,6 +138,8 @@ public class NearbyFragment extends Fragment implements
         fragmentTransaction.add(R.id.map_container, mapFragment);
         fragmentTransaction.commit();
         mapFragment.getMapAsync(this);
+
+        smartLocation = new SmartLocation.Builder(getContext()).logging(true).build();
 
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView .setAdapter(fastAdapter);
@@ -151,12 +166,11 @@ public class NearbyFragment extends Fragment implements
     }
 
 
-    private void startLocation() {
-
+    private void startLocation(LocationParams locationParams) {
         LocationGooglePlayServicesProvider provider = new LocationGooglePlayServicesProvider();
         provider.setCheckLocationSettings(true);
-        smartLocation = new SmartLocation.Builder(getContext()).logging(true).build();
-        smartLocation.location(provider).config(LocationParams.NAVIGATION).start(this);
+        SmartLocation.with(getContext()).location().stop();
+        smartLocation.location(provider).config(locationParams).start(this);
     }
 
     private void stopLocation () {
@@ -166,7 +180,7 @@ public class NearbyFragment extends Fragment implements
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == LOCATION_PERMISSION_ID && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            startLocation();
+            startLocationByActivity();
         }
     }
 
@@ -196,9 +210,39 @@ public class NearbyFragment extends Fragment implements
         });
 
         Location lastLocation = SmartLocation.with(getContext()).location().getLastLocation();
+
         if (lastLocation != null) {
             onLocationUpdated(lastLocation);
         }
+    }
+
+    private void startLocationByActivity () {
+        SmartLocation.with(getContext()).activity().start(new OnActivityUpdatedListener() {
+            @Override
+            public void onActivityUpdated(DetectedActivity detectedActivity) {
+                if (detectedActivity != null) {
+                    switch (detectedActivity.getType()) {
+                        case DetectedActivity.IN_VEHICLE:
+                            startLocation(LocationParams.NAVIGATION);
+                            break;
+                        case DetectedActivity.ON_BICYCLE:
+                            startLocation(LocationParams.NAVIGATION);
+                            break;
+                        case DetectedActivity.ON_FOOT:
+                            startLocation(LocationParams.BEST_EFFORT);
+                            break;
+                        case DetectedActivity.STILL:
+                            startLocation(LocationParams.LAZY);
+                            break;
+                        case DetectedActivity.TILTING:
+                            startLocation(LocationParams.LAZY);
+                            break;
+                        default:
+                            startLocation(LocationParams.NAVIGATION);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -208,7 +252,7 @@ public class NearbyFragment extends Fragment implements
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 14.5f);
             if (mapCircle != null)
                 mapCircle.remove();
-            mMap.animateCamera(cameraUpdate);
+            mMap.moveCamera(cameraUpdate);
             mapCircle = mMap.addCircle(circleOptions.center(latLng));
         }
 
@@ -291,7 +335,7 @@ public class NearbyFragment extends Fragment implements
     @Override
     public void onResume() {
         super.onResume();
-        startLocation();
+        startLocationByActivity();
     }
 
     @Override

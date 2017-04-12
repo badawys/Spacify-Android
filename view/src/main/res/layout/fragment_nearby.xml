@@ -51,6 +51,18 @@
                 android:layout_alignParentStart="true"/>
 
             <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/refreshButton"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                fancy:fb_radius= "40dp"
+                fancy:fb_defaultColor="@color/colorPrimary"
+                fancy:fb_focusColor="@color/colorPrimaryDark"
+                fancy:fb_iconResource="@drawable/ic_toolbar_refresh"
+                android:layout_toStartOf="@+id/addButton"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp"/>
+
+            <mehdi.sakout.fancybuttons.FancyButton
                 android:id="@+id/addButton"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
