@@ -1,5 +1,6 @@
 package co.broccli.spacify.Space;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -16,12 +18,14 @@ import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.github.clans.fab.FloatingActionButton;
 import com.mikepenz.fastadapter.adapters.FastItemAdapter;
 
 import co.broccli.logic.Callback;
 import co.broccli.logic.SpacifyApi;
 import co.broccli.logic.model.space.CreateSpace;
 import co.broccli.logic.model.space.GetSpace;
+import co.broccli.spacify.Auth.SignupActivity;
 import co.broccli.spacify.R;
 
 public class SpaceActivity extends AppCompatActivity{
@@ -59,6 +63,15 @@ public class SpaceActivity extends AppCompatActivity{
             public void onError(String errorMessage) {
                 Toast.makeText(SpaceActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
                 finish();
+            }
+        });
+
+        final FloatingActionButton postText = (FloatingActionButton) findViewById(R.id.post_text_fab);
+        postText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CreatePostActivity.class);
+                startActivity(intent);
             }
         });
 

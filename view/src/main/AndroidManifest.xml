@@ -68,12 +68,14 @@
         <activity
             android:name=".Search.SearchActivity"
             android:label="@string/search_title"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Space.CreateSpaceActivity"
             android:label="@string/create_space"
-            android:theme="@style/CreateSpaceTheme"/>
+            android:theme="@style/CreateSpaceTheme" />
+        <activity
+            android:name=".Space.CreatePostActivity"
+            android:label="@string/create_post"/>
     </application>
 
 </manifest>

@@ -59,4 +59,5 @@
     <string name="create_space_name_is_required">You need to type a name for your space!</string>
     <string name="create_space_type_is_required">You need to select a space type first!</string>
     <string name="select_image">Select Image</string>
+    <string name="create_post">Add Post</string>
 </resources>

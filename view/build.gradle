@@ -70,6 +70,8 @@ dependencies {
     compile 'com.aurelhubert:ahbottomnavigation:2.0.2'
     compile 'com.github.arimorty:floatingsearchview:2.0.3'
     compile 'com.github.paolorotolo:appintro:4.1.0'
+    compile 'com.github.clans:fab:1.6.4'
+    compile 'com.android.support.constraint:constraint-layout:+'
     testCompile 'junit:junit:4.12'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
