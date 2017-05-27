@@ -5,12 +5,18 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mikepenz.fastadapter.items.AbstractItem;
+
+import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.broccli.logic.model.space.Post;
+import co.broccli.logic.model.space.TextPostData;
 import co.broccli.spacify.R;
 
 public class SpacePostsFeedItem extends AbstractItem<SpacePostsFeedItem, SpacePostsFeedItem.ViewHolder> {
@@ -38,7 +44,10 @@ public class SpacePostsFeedItem extends AbstractItem<SpacePostsFeedItem, SpacePo
         //call super so the selection is already handled for you
         super.bindView(viewHolder, payloads);
 
-        viewHolder.postText.setText(postData.getData());
+        Gson gson = new Gson();
+        TextPostData textPostData = gson.fromJson(postData.getData(), TextPostData.class);
+
+        viewHolder.postText.setText(textPostData.getText());
         viewHolder.userPhoto.setImageURI("https://spacify.s3-accelerate.amazonaws.com/" +
                 postData.getUser().getPhoto());
         viewHolder.postUserName.setText(postData.getUser().getName());
