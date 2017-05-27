@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +27,8 @@ import co.broccli.logic.SpacifyApi;
 import co.broccli.logic.model.space.CreateSpace;
 import co.broccli.logic.model.space.GetSpace;
 import co.broccli.spacify.Auth.SignupActivity;
+import co.broccli.logic.model.space.Post;
+import co.broccli.logic.model.space.SpacePosts;
 import co.broccli.spacify.R;
 
 public class SpaceActivity extends AppCompatActivity{
@@ -75,14 +78,25 @@ public class SpaceActivity extends AppCompatActivity{
             }
         });
 
-        fastAdapter.add(
-                new SpacePostsFeedItem(),
-                new SpacePostsFeedItem(),
-                new SpacePostsFeedItem(),
-                new SpacePostsFeedItem(),
-                new SpacePostsFeedItem(),
-                new SpacePostsFeedItem()
-        );
+        SpacifyApi.space().getSpacePosts(this,
+                SpaceId,
+                new Callback<SpacePosts>() {
+                    @Override
+                    public void onResult(SpacePosts spacePosts) {
+                        if (spacePosts.getData() != null) {
+                            fastAdapter.clear();
+                            for (Post post : spacePosts.getData()) {
+                                fastAdapter.add(new SpacePostsFeedItem().withPostData(post));
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(String errorMessage) {
+                        Toast.makeText(SpaceActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
     }
 
     @Override

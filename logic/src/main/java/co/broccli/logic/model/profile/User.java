@@ -7,6 +7,9 @@ import com.google.gson.annotations.SerializedName;
 @Generated("org.jsonschema2pojo")
 public class User {
 
+    @SerializedName("id")
+    @Expose
+    private int id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -16,6 +19,24 @@ public class User {
     @SerializedName("email")
     @Expose
     private String email;
+
+    /**
+     *
+     * @return
+     * The name
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     *
+     * @param name
+     * The name
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
 
     /**
      *

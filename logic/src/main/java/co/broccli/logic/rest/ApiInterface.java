@@ -6,9 +6,11 @@ import co.broccli.logic.model.OAuth2AccessToken.AccessTokenRequest;
 import co.broccli.logic.model.OAuth2AccessToken.OAuth2AccessToken;
 import co.broccli.logic.model.profile.User;
 import co.broccli.logic.model.signup.Signup;
+import co.broccli.logic.model.space.CreatePost;
 import co.broccli.logic.model.space.CreateSpace;
 import co.broccli.logic.model.space.GetSpace;
 import co.broccli.logic.model.space.NearbySpaces;
+import co.broccli.logic.model.space.SpacePosts;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -118,4 +120,23 @@ public interface ApiInterface {
     Call<NearbySpaces> getNearby(
             @Path("lng") double lng,
             @Path("lat") double lat);
+
+    /**
+     * Get Space posts
+     *
+     * @return Space
+     */
+    @GET("space/{spaceId}/posts")
+    Call<SpacePosts> getSpacePosts(@Path("spaceId") int id);
+
+    /**
+     * Create Space
+     *
+     * @return Space
+     */
+    @Multipart
+    @POST("post/create")
+    Call<CreatePost> createPost(
+            @PartMap() Map<String, RequestBody> partMap
+    );
 }
