@@ -54,7 +54,7 @@ public class SpaceActivity extends AppCompatActivity{
         mRecyclerView.setLayoutManager(linearLayoutManager);
         mRecyclerView .setAdapter(fastAdapter);
 
-        int SpaceId = getIntent().getIntExtra("EXTRA_SPACE_ID", 0);
+        final int SpaceId = getIntent().getIntExtra("EXTRA_SPACE_ID", 0);
 
         SpacifyApi.space().getSpace(this, SpaceId, new Callback<GetSpace>() {
             @Override
@@ -74,6 +74,7 @@ public class SpaceActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CreatePostActivity.class);
+                intent.putExtra("EXTRA_SPACE_ID", SpaceId);
                 startActivity(intent);
             }
         });
